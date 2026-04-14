@@ -597,7 +597,9 @@ elif page == "🤖 AI Query":
     )
 
     engine = QueryEngine(cities=cities, areas=areas)
-    if engine.llm_provider == "anthropic":
+    if engine.llm_provider == "github":
+        method_label = "LLM (GitHub Models — free)"
+    elif engine.llm_provider == "anthropic":
         method_label = "LLM (Claude)"
     elif engine.llm_provider == "openai":
         method_label = "LLM (GPT-4o-mini)"

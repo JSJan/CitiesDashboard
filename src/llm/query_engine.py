@@ -193,8 +193,8 @@ ANTHROPIC_TOOLS = [
 class QueryEngine:
     """
     Natural language query engine with LLM function calling.
-    Supports Anthropic Claude or OpenAI GPT. Falls back to rule-based parsing
-    when no API key is available.
+    Supports GitHub Models (free), Anthropic Claude, or OpenAI GPT.
+    Falls back to rule-based parsing when no API key is available.
     """
 
     def __init__(self, cities: list = None, areas: list = None):
@@ -202,13 +202,27 @@ class QueryEngine:
         self.areas = areas
         self.openai_client = None
         self.anthropic_client = None
-        self.llm_provider = None  # "anthropic" or "openai"
+        self.llm_provider = None  # "github", "anthropic", or "openai"
         self._init_llm()
         self._init_tools()
 
     def _init_llm(self):
-        """Initialize LLM client — prefers Anthropic, then OpenAI."""
-        # Try Anthropic first
+        """Initialize LLM client — prefers GitHub Models, then Anthropic, then OpenAI."""
+        # Try GitHub Models first (free with GitHub PAT)
+        api_key = os.environ.get("GITHUB_TOKEN")
+        if api_key:
+            try:
+                import openai
+                self.openai_client = openai.OpenAI(
+                    api_key=api_key,
+                    base_url="https://models.inference.ai.azure.com",
+                )
+                self.llm_provider = "github"
+                return
+            except ImportError:
+                pass
+
+        # Try Anthropic
         api_key = os.environ.get("ANTHROPIC_API_KEY")
         if api_key:
             try:
