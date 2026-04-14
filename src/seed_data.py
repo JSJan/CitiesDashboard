@@ -923,6 +923,380 @@ def get_all_cities():
                 green_cover_pct=32.0,
             ),
         ),
+
+        # ── South India Hill Stations ──
+
+        CityProfile(
+            name="Ooty", state="Tamil Nadu", tier=3,
+            geo=GeographicalProfile(
+                latitude=11.410, longitude=76.695, elevation_m=2240,
+                coastal=False, river_proximity=False, seismic_zone=2,
+                flood_risk="low", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=15.5, avg_rainfall_mm=1250, humidity_pct=72,
+                air_quality_index=28, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.2, projected_temp_rise_2070=2.0,
+                projected_rainfall_change_2050_pct=-5.0,
+                projected_rainfall_change_2070_pct=-8.0,
+                projected_aqi_2050=35, projected_aqi_2070=42,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=1800, avg_price_per_sqft_2020=3000,
+                avg_price_per_sqft_2025=4800, cagr_2015_2025=10.3,
+                projected_price_2030=7500, projected_price_2040=16000,
+                projected_price_2050=32000, projected_price_2070=72000,
+            ),
+            population=PopulationData(
+                population_2011=88430, population_2020=95000,
+                population_2025=100000, growth_rate_pct=0.8,
+                projected_2030=105000, projected_2040=115000,
+                projected_2050=125000, projected_2070=140000,
+                density_per_sqkm=1200,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=5.0, education_score=6.0,
+                transport_score=3.5, water_supply_score=6.0,
+                green_cover_pct=55.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Kodaikanal", state="Tamil Nadu", tier=3,
+            geo=GeographicalProfile(
+                latitude=10.238, longitude=77.489, elevation_m=2133,
+                coastal=False, river_proximity=False, seismic_zone=2,
+                flood_risk="low", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=14.8, avg_rainfall_mm=1650, humidity_pct=78,
+                air_quality_index=22, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.1, projected_temp_rise_2070=1.8,
+                projected_rainfall_change_2050_pct=-3.0,
+                projected_rainfall_change_2070_pct=-6.0,
+                projected_aqi_2050=28, projected_aqi_2070=35,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=1500, avg_price_per_sqft_2020=2500,
+                avg_price_per_sqft_2025=4200, cagr_2015_2025=10.8,
+                projected_price_2030=6800, projected_price_2040=15000,
+                projected_price_2050=30000, projected_price_2070=68000,
+            ),
+            population=PopulationData(
+                population_2011=36501, population_2020=42000,
+                population_2025=45000, growth_rate_pct=0.9,
+                projected_2030=48000, projected_2040=53000,
+                projected_2050=58000, projected_2070=65000,
+                density_per_sqkm=800,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=4.5, education_score=5.5,
+                transport_score=3.0, water_supply_score=5.5,
+                green_cover_pct=60.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Munnar", state="Kerala", tier=3,
+            geo=GeographicalProfile(
+                latitude=10.089, longitude=77.060, elevation_m=1532,
+                coastal=False, river_proximity=True, seismic_zone=2,
+                flood_risk="medium", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=16.0, avg_rainfall_mm=2800, humidity_pct=82,
+                air_quality_index=20, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.3, projected_temp_rise_2070=2.1,
+                projected_rainfall_change_2050_pct=5.0,
+                projected_rainfall_change_2070_pct=8.0,
+                projected_aqi_2050=25, projected_aqi_2070=32,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=1200, avg_price_per_sqft_2020=2200,
+                avg_price_per_sqft_2025=3800, cagr_2015_2025=12.2,
+                projected_price_2030=6500, projected_price_2040=15000,
+                projected_price_2050=32000, projected_price_2070=75000,
+            ),
+            population=PopulationData(
+                population_2011=30000, population_2020=35000,
+                population_2025=38000, growth_rate_pct=1.0,
+                projected_2030=40000, projected_2040=45000,
+                projected_2050=50000, projected_2070=58000,
+                density_per_sqkm=600,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=4.0, education_score=4.5,
+                transport_score=3.0, water_supply_score=5.0,
+                green_cover_pct=65.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Coorg", state="Karnataka", tier=3,
+            geo=GeographicalProfile(
+                latitude=12.420, longitude=75.740, elevation_m=1150,
+                coastal=False, river_proximity=True, seismic_zone=2,
+                flood_risk="low", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=18.5, avg_rainfall_mm=3000, humidity_pct=80,
+                air_quality_index=25, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.2, projected_temp_rise_2070=1.9,
+                projected_rainfall_change_2050_pct=3.0,
+                projected_rainfall_change_2070_pct=5.0,
+                projected_aqi_2050=30, projected_aqi_2070=38,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=1000, avg_price_per_sqft_2020=1800,
+                avg_price_per_sqft_2025=3200, cagr_2015_2025=12.3,
+                projected_price_2030=5500, projected_price_2040=13000,
+                projected_price_2050=28000, projected_price_2070=65000,
+            ),
+            population=PopulationData(
+                population_2011=554762, population_2020=600000,
+                population_2025=630000, growth_rate_pct=0.7,
+                projected_2030=660000, projected_2040=710000,
+                projected_2050=750000, projected_2070=810000,
+                density_per_sqkm=450,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=4.5, education_score=5.0,
+                transport_score=3.5, water_supply_score=5.5,
+                green_cover_pct=58.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Wayanad", state="Kerala", tier=3,
+            geo=GeographicalProfile(
+                latitude=11.605, longitude=76.083, elevation_m=900,
+                coastal=False, river_proximity=True, seismic_zone=2,
+                flood_risk="medium", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=20.0, avg_rainfall_mm=3200, humidity_pct=85,
+                air_quality_index=22, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.3, projected_temp_rise_2070=2.0,
+                projected_rainfall_change_2050_pct=6.0,
+                projected_rainfall_change_2070_pct=10.0,
+                projected_aqi_2050=28, projected_aqi_2070=35,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=800, avg_price_per_sqft_2020=1500,
+                avg_price_per_sqft_2025=2800, cagr_2015_2025=13.4,
+                projected_price_2030=5000, projected_price_2040=12000,
+                projected_price_2050=26000, projected_price_2070=62000,
+            ),
+            population=PopulationData(
+                population_2011=817420, population_2020=880000,
+                population_2025=920000, growth_rate_pct=0.8,
+                projected_2030=960000, projected_2040=1030000,
+                projected_2050=1100000, projected_2070=1200000,
+                density_per_sqkm=384,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=4.5, education_score=5.0,
+                transport_score=3.0, water_supply_score=5.0,
+                green_cover_pct=62.0,
+            ),
+        ),
+
+        # ── North India Hill Stations ──
+
+        CityProfile(
+            name="Shimla", state="Himachal Pradesh", tier=3,
+            geo=GeographicalProfile(
+                latitude=31.105, longitude=77.173, elevation_m=2276,
+                coastal=False, river_proximity=False, seismic_zone=4,
+                flood_risk="low", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=12.0, avg_rainfall_mm=1575, humidity_pct=60,
+                air_quality_index=35, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.5, projected_temp_rise_2070=2.5,
+                projected_rainfall_change_2050_pct=-8.0,
+                projected_rainfall_change_2070_pct=-12.0,
+                projected_aqi_2050=45, projected_aqi_2070=55,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=3500, avg_price_per_sqft_2020=5500,
+                avg_price_per_sqft_2025=8000, cagr_2015_2025=8.6,
+                projected_price_2030=12000, projected_price_2040=24000,
+                projected_price_2050=45000, projected_price_2070=95000,
+            ),
+            population=PopulationData(
+                population_2011=169578, population_2020=195000,
+                population_2025=210000, growth_rate_pct=1.0,
+                projected_2030=225000, projected_2040=250000,
+                projected_2050=275000, projected_2070=310000,
+                density_per_sqkm=2800,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=6.5, education_score=7.5,
+                transport_score=4.0, water_supply_score=6.0,
+                green_cover_pct=40.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Manali", state="Himachal Pradesh", tier=3,
+            geo=GeographicalProfile(
+                latitude=32.239, longitude=77.188, elevation_m=2050,
+                coastal=False, river_proximity=True, seismic_zone=4,
+                flood_risk="medium", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=10.5, avg_rainfall_mm=1400, humidity_pct=55,
+                air_quality_index=18, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.8, projected_temp_rise_2070=2.8,
+                projected_rainfall_change_2050_pct=-10.0,
+                projected_rainfall_change_2070_pct=-15.0,
+                projected_aqi_2050=25, projected_aqi_2070=32,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=2000, avg_price_per_sqft_2020=3500,
+                avg_price_per_sqft_2025=6000, cagr_2015_2025=11.6,
+                projected_price_2030=10000, projected_price_2040=22000,
+                projected_price_2050=45000, projected_price_2070=100000,
+            ),
+            population=PopulationData(
+                population_2011=8096, population_2020=12000,
+                population_2025=15000, growth_rate_pct=3.5,
+                projected_2030=18000, projected_2040=24000,
+                projected_2050=30000, projected_2070=42000,
+                density_per_sqkm=350,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=4.0, education_score=4.5,
+                transport_score=3.5, water_supply_score=5.0,
+                green_cover_pct=50.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Nainital", state="Uttarakhand", tier=3,
+            geo=GeographicalProfile(
+                latitude=29.380, longitude=79.454, elevation_m=2084,
+                coastal=False, river_proximity=False, seismic_zone=4,
+                flood_risk="low", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=13.0, avg_rainfall_mm=2290, humidity_pct=68,
+                air_quality_index=30, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.6, projected_temp_rise_2070=2.6,
+                projected_rainfall_change_2050_pct=-6.0,
+                projected_rainfall_change_2070_pct=-10.0,
+                projected_aqi_2050=38, projected_aqi_2070=48,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=2800, avg_price_per_sqft_2020=4500,
+                avg_price_per_sqft_2025=7000, cagr_2015_2025=9.6,
+                projected_price_2030=11000, projected_price_2040=22000,
+                projected_price_2050=42000, projected_price_2070=90000,
+            ),
+            population=PopulationData(
+                population_2011=41377, population_2020=48000,
+                population_2025=52000, growth_rate_pct=1.2,
+                projected_2030=56000, projected_2040=63000,
+                projected_2050=70000, projected_2070=82000,
+                density_per_sqkm=1400,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=5.5, education_score=6.5,
+                transport_score=3.5, water_supply_score=5.5,
+                green_cover_pct=45.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Mussoorie", state="Uttarakhand", tier=3,
+            geo=GeographicalProfile(
+                latitude=30.455, longitude=78.066, elevation_m=2005,
+                coastal=False, river_proximity=False, seismic_zone=4,
+                flood_risk="low", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=14.0, avg_rainfall_mm=1920, humidity_pct=65,
+                air_quality_index=28, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.5, projected_temp_rise_2070=2.5,
+                projected_rainfall_change_2050_pct=-5.0,
+                projected_rainfall_change_2070_pct=-9.0,
+                projected_aqi_2050=35, projected_aqi_2070=45,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=3000, avg_price_per_sqft_2020=5000,
+                avg_price_per_sqft_2025=7500, cagr_2015_2025=9.6,
+                projected_price_2030=11500, projected_price_2040=23000,
+                projected_price_2050=44000, projected_price_2070=95000,
+            ),
+            population=PopulationData(
+                population_2011=30118, population_2020=35000,
+                population_2025=38000, growth_rate_pct=1.0,
+                projected_2030=41000, projected_2040=46000,
+                projected_2050=50000, projected_2070=58000,
+                density_per_sqkm=1100,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=5.0, education_score=7.0,
+                transport_score=3.5, water_supply_score=5.5,
+                green_cover_pct=42.0,
+            ),
+        ),
+
+        CityProfile(
+            name="Darjeeling", state="West Bengal", tier=3,
+            geo=GeographicalProfile(
+                latitude=27.041, longitude=88.263, elevation_m=2042,
+                coastal=False, river_proximity=True, seismic_zone=4,
+                flood_risk="medium", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=12.5, avg_rainfall_mm=3092, humidity_pct=80,
+                air_quality_index=32, extreme_heat_days=0,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.6, projected_temp_rise_2070=2.7,
+                projected_rainfall_change_2050_pct=5.0,
+                projected_rainfall_change_2070_pct=8.0,
+                projected_aqi_2050=40, projected_aqi_2070=50,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=2200, avg_price_per_sqft_2020=3500,
+                avg_price_per_sqft_2025=5500, cagr_2015_2025=9.6,
+                projected_price_2030=8500, projected_price_2040=18000,
+                projected_price_2050=35000, projected_price_2070=78000,
+            ),
+            population=PopulationData(
+                population_2011=132016, population_2020=140000,
+                population_2025=145000, growth_rate_pct=0.5,
+                projected_2030=150000, projected_2040=158000,
+                projected_2050=165000, projected_2070=178000,
+                density_per_sqkm=2200,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=5.0, education_score=6.0,
+                transport_score=3.0, water_supply_score=5.0,
+                green_cover_pct=48.0,
+            ),
+        ),
     ]
 
     return cities

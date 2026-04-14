@@ -23,6 +23,7 @@ from src.population_analysis import generate_population_report, generate_populat
 from src.scoring_engine import generate_master_ranking, get_top_cities_to_buy, compute_all_scores
 from src.chennai_area_analysis import generate_area_ranking, generate_zone_summary, get_top_areas_to_buy
 from src.llm.query_engine import QueryEngine
+from src.scrapers.pipeline import run_weather_pipeline, run_real_estate_pipeline, get_pipeline_status
 
 
 # ────────────────────────── PAGE CONFIG ──────────────────────────
@@ -71,6 +72,7 @@ page = st.sidebar.radio(
         "🤖 AI Query",
         "🌍 World Cities",
         "📈 Price Timeline",
+        "⛰️ Hill Stations",
     ],
 )
 
@@ -116,6 +118,47 @@ st.sidebar.caption(
     "Data: Census 2011, IMD, IPCC AR6, NAREDCO estimates. "
     "Projections through 2050/2070. Not financial advice."
 )
+
+# ── Refresh Data ──
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Live Data**")
+
+_status = get_pipeline_status()
+_last_run = _status.get("last_run")
+if _last_run:
+    from datetime import datetime as _dt
+    try:
+        _last_dt = _dt.fromisoformat(_last_run)
+        _age = _dt.now() - _last_dt
+        _age_str = f"{_age.days}d ago" if _age.days > 0 else f"{_age.seconds // 3600}h ago"
+    except Exception:
+        _age_str = "unknown"
+    st.sidebar.caption(f"Last refresh: {_age_str}")
+else:
+    st.sidebar.caption("Never refreshed")
+
+_refresh_scope = st.sidebar.selectbox(
+    "Refresh scope",
+    ["Weather (free, no key)", "Real Estate (scrape)", "All"],
+    label_visibility="collapsed",
+)
+
+if st.sidebar.button("🔄 Refresh Live Data", use_container_width=True):
+    with st.sidebar.status("Fetching live data...", expanded=True) as _status_ui:
+        try:
+            if _refresh_scope in ("Weather (free, no key)", "All"):
+                st.sidebar.write("Fetching weather...")
+                _w = run_weather_pipeline(cities)
+                st.sidebar.write(f"Weather: {_w['details']}")
+            if _refresh_scope in ("Real Estate (scrape)", "All"):
+                st.sidebar.write("Scraping real estate...")
+                _r = run_real_estate_pipeline(cities, areas)
+                st.sidebar.write(f"Real estate: {_r['details']}")
+            _status_ui.update(label="Refresh complete!", state="complete")
+        except Exception as _e:
+            _status_ui.update(label=f"Error: {_e}", state="error")
+    st.cache_data.clear()
+    st.rerun()
 
 # ────────────────────────── HEADER ──────────────────────────
 
@@ -830,3 +873,209 @@ elif page == "📈 Price Timeline":
                     f"₹{lp.price_per_sqft_2025:,}/sqft",
                     f"{lp.cagr_2015_2025:.1f}% CAGR · {growth:.0f}x by 2050",
                 )
+
+
+elif page == "⛰️ Hill Stations":
+    st.header("⛰️ Hill Stations — Investment & Liveability Analysis")
+    st.markdown(
+        "Compare hill stations across South and North India for retirement living, "
+        "vacation homes, and long-term land investment."
+    )
+
+    # Identify hill stations by terrain + elevation
+    hill_stations = [
+        c for c in cities
+        if c.geo.terrain_type == "hilly" and c.geo.elevation_m >= 800
+    ]
+    south_hills = [c for c in hill_stations if c.geo.latitude < 20]
+    north_hills = [c for c in hill_stations if c.geo.latitude >= 20]
+
+    # Region selector
+    region = st.radio("Region", ["All", "South India", "North India"], horizontal=True)
+    if region == "South India":
+        display_hills = south_hills
+    elif region == "North India":
+        display_hills = north_hills
+    else:
+        display_hills = hill_stations
+
+    if not display_hills:
+        st.warning("No hill stations found for this filter.")
+    else:
+        tab1, tab2, tab3, tab4 = st.tabs([
+            "Overview", "Investment ROI", "Price Timeline", "Climate Advantage",
+        ])
+
+        with tab1:
+            overview_rows = []
+            for c in display_hills:
+                lp = c.land_price
+                region_label = "South" if c.geo.latitude < 20 else "North"
+                overview_rows.append({
+                    "Hill Station": c.name,
+                    "State": c.state,
+                    "Region": region_label,
+                    "Elevation (m)": c.geo.elevation_m,
+                    "Avg Temp (°C)": c.climate.avg_temp_c,
+                    "AQI": c.climate.air_quality_index,
+                    "Green Cover %": c.infrastructure.green_cover_pct,
+                    "Price 2025 (₹/sqft)": f"{lp.avg_price_per_sqft_2025:,}",
+                    "CAGR %": lp.cagr_2015_2025,
+                    "Flood Risk": c.geo.flood_risk,
+                })
+            st.dataframe(
+                pd.DataFrame(overview_rows),
+                width="stretch", hide_index=True,
+            )
+
+            # Key metrics
+            cheapest = min(display_hills, key=lambda c: c.land_price.avg_price_per_sqft_2025)
+            best_cagr = max(display_hills, key=lambda c: c.land_price.cagr_2015_2025)
+            cleanest = min(display_hills, key=lambda c: c.climate.air_quality_index)
+            coolest = min(display_hills, key=lambda c: c.climate.avg_temp_c)
+
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Cheapest", cheapest.name, f"₹{cheapest.land_price.avg_price_per_sqft_2025:,}/sqft")
+            col2.metric("Highest Growth", best_cagr.name, f"{best_cagr.land_price.cagr_2015_2025}% CAGR")
+            col3.metric("Cleanest Air", cleanest.name, f"AQI {cleanest.climate.air_quality_index}")
+            col4.metric("Coolest", coolest.name, f"{coolest.climate.avg_temp_c}°C")
+
+        with tab2:
+            st.subheader("Return on Investment Analysis")
+            st.markdown("Assuming ₹50 lakh investment today — how much land and what returns?")
+
+            investment = 5000000  # ₹50 lakh
+
+            roi_rows = []
+            for c in display_hills:
+                lp = c.land_price
+                sqft_bought = investment / lp.avg_price_per_sqft_2025
+                value_2030 = sqft_bought * lp.projected_price_2030
+                value_2050 = sqft_bought * lp.projected_price_2050
+                value_2070 = sqft_bought * lp.projected_price_2070
+                roi_2050 = ((value_2050 - investment) / investment) * 100
+                roi_2070 = ((value_2070 - investment) / investment) * 100
+                region_label = "South" if c.geo.latitude < 20 else "North"
+                roi_rows.append({
+                    "Hill Station": c.name,
+                    "Region": region_label,
+                    "Sqft Bought": f"{sqft_bought:,.0f}",
+                    "Value 2030 (₹)": f"{value_2030:,.0f}",
+                    "Value 2050 (₹)": f"{value_2050:,.0f}",
+                    "Value 2070 (₹)": f"{value_2070:,.0f}",
+                    "ROI 2050 %": f"{roi_2050:,.0f}%",
+                    "ROI 2070 %": f"{roi_2070:,.0f}%",
+                    "Growth 25yr": f"{lp.projected_price_2050 / lp.avg_price_per_sqft_2025:.1f}x",
+                })
+            roi_df = pd.DataFrame(roi_rows)
+            st.dataframe(roi_df, width="stretch", hide_index=True)
+
+            # ROI bar chart
+            chart_data = pd.DataFrame([{
+                "Hill Station": c.name,
+                "ROI 2050 %": ((c.land_price.projected_price_2050 / c.land_price.avg_price_per_sqft_2025) - 1) * 100,
+                "ROI 2070 %": ((c.land_price.projected_price_2070 / c.land_price.avg_price_per_sqft_2025) - 1) * 100,
+            } for c in display_hills])
+            chart_melt = chart_data.melt(id_vars="Hill Station", var_name="Horizon", value_name="ROI %")
+            fig = px.bar(
+                chart_melt, x="Hill Station", y="ROI %", color="Horizon",
+                barmode="group", title="Return on Investment — Hill Stations (₹50L invested today)",
+                color_discrete_sequence=["#2ecc71", "#3498db"],
+            )
+            st.plotly_chart(fig, width="stretch")
+
+        with tab3:
+            st.subheader("Land Price Timeline — 2015 to 2070")
+            tl_rows = []
+            for c in display_hills:
+                lp = c.land_price
+                region_label = "South" if c.geo.latitude < 20 else "North"
+                for year, price in [
+                    (2015, lp.avg_price_per_sqft_2015),
+                    (2020, lp.avg_price_per_sqft_2020),
+                    (2025, lp.avg_price_per_sqft_2025),
+                    (2030, lp.projected_price_2030),
+                    (2040, lp.projected_price_2040),
+                    (2050, lp.projected_price_2050),
+                    (2070, lp.projected_price_2070),
+                ]:
+                    tl_rows.append({
+                        "Hill Station": c.name, "Region": region_label,
+                        "Year": year, "Price (₹/sqft)": price,
+                    })
+
+            tl_df = pd.DataFrame(tl_rows)
+            fig = px.line(
+                tl_df, x="Year", y="Price (₹/sqft)", color="Hill Station",
+                markers=True, line_dash="Region",
+                title="Hill Station Land Prices — Historical & Projected",
+            )
+            fig.update_layout(hovermode="x unified")
+            st.plotly_chart(fig, width="stretch")
+
+            # Growth multiplier table
+            growth_rows = []
+            for c in display_hills:
+                lp = c.land_price
+                growth_rows.append({
+                    "Hill Station": c.name,
+                    "2015 (₹)": f"{lp.avg_price_per_sqft_2015:,}",
+                    "2025 (₹)": f"{lp.avg_price_per_sqft_2025:,}",
+                    "2050 (₹)": f"{lp.projected_price_2050:,}",
+                    "2070 (₹)": f"{lp.projected_price_2070:,}",
+                    "10yr": f"{lp.avg_price_per_sqft_2025 / lp.avg_price_per_sqft_2015:.1f}x",
+                    "25yr": f"{lp.projected_price_2050 / lp.avg_price_per_sqft_2025:.1f}x",
+                    "45yr": f"{lp.projected_price_2070 / lp.avg_price_per_sqft_2025:.1f}x",
+                })
+            st.dataframe(pd.DataFrame(growth_rows), width="stretch", hide_index=True)
+
+        with tab4:
+            st.subheader("Climate Advantage — Why Hill Stations?")
+            st.markdown(
+                "Hill stations offer **cooler temperatures**, **cleaner air**, and **higher green cover** "
+                "compared to plains cities. As climate change worsens urban heat, these advantages will drive demand."
+            )
+
+            # Compare hill stations vs metro averages
+            metros = [c for c in cities if c.tier == 1]
+            avg_metro_temp = sum(c.climate.avg_temp_c for c in metros) / len(metros)
+            avg_metro_aqi = sum(c.climate.air_quality_index for c in metros) / len(metros)
+            avg_hill_temp = sum(c.climate.avg_temp_c for c in display_hills) / len(display_hills)
+            avg_hill_aqi = sum(c.climate.air_quality_index for c in display_hills) / len(display_hills)
+
+            col1, col2, col3 = st.columns(3)
+            col1.metric(
+                "Avg Temperature",
+                f"{avg_hill_temp:.1f}°C (Hills)",
+                f"{avg_hill_temp - avg_metro_temp:.1f}°C vs Metros",
+            )
+            col2.metric(
+                "Avg AQI",
+                f"{avg_hill_aqi:.0f} (Hills)",
+                f"{avg_hill_aqi - avg_metro_aqi:.0f} vs Metros",
+            )
+            avg_hill_green = sum(c.infrastructure.green_cover_pct for c in display_hills) / len(display_hills)
+            avg_metro_green = sum(c.infrastructure.green_cover_pct for c in metros) / len(metros)
+            col3.metric(
+                "Avg Green Cover",
+                f"{avg_hill_green:.0f}% (Hills)",
+                f"+{avg_hill_green - avg_metro_green:.0f}% vs Metros",
+            )
+
+            # Scatter: Temp vs AQI colored by elevation
+            climate_data = pd.DataFrame([{
+                "Hill Station": c.name,
+                "Avg Temp (°C)": c.climate.avg_temp_c,
+                "AQI": c.climate.air_quality_index,
+                "Elevation (m)": c.geo.elevation_m,
+                "Green Cover %": c.infrastructure.green_cover_pct,
+            } for c in display_hills])
+            fig = px.scatter(
+                climate_data, x="Avg Temp (°C)", y="AQI",
+                size="Green Cover %", color="Elevation (m)",
+                text="Hill Station",
+                title="Temperature vs Air Quality — Higher Elevation = Better Living",
+                color_continuous_scale="Viridis",
+            )
+            fig.update_traces(textposition="top center")
+            st.plotly_chart(fig, width="stretch")

@@ -63,9 +63,9 @@ def all_cities_scored():
 class TestSeedDataIntegrity:
     """Verify hardcoded seed data is internally consistent."""
 
-    def test_exactly_23_cities(self):
+    def test_exactly_33_cities(self):
         cities = get_all_cities()
-        assert len(cities) == 23, f"Expected 23 cities, got {len(cities)}"
+        assert len(cities) == 33, f"Expected 33 cities, got {len(cities)}"
 
     def test_tier_distribution(self):
         cities = get_all_cities()
@@ -78,10 +78,10 @@ class TestSeedDataIntegrity:
         assert tiers[3] >= 2, f"Expected ≥2 Tier-3 cities, got {tiers[3]}"
 
     def test_temperature_ranges(self):
-        """Average temps in India should be 15–35°C."""
+        """Average temps in India should be 8–35°C (hill stations can be colder)."""
         for c in get_all_cities():
-            assert 15 <= c.climate.avg_temp_c <= 35, (
-                f"{c.name} avg_temp_c={c.climate.avg_temp_c} outside 15–35°C"
+            assert 8 <= c.climate.avg_temp_c <= 35, (
+                f"{c.name} avg_temp_c={c.climate.avg_temp_c} outside 8–35°C"
             )
 
     def test_rainfall_ranges(self):
@@ -200,7 +200,7 @@ class TestScoringEngine:
 
     def test_ranking_has_all_cities(self):
         df = generate_master_ranking(all_cities_scored())
-        assert len(df) == 23
+        assert len(df) == 33
 
     def test_scores_differ_between_cities(self):
         """Scores should not be identical for all cities (sanity check)."""

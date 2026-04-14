@@ -166,9 +166,45 @@
         "city": "Delhi",
         "rating": 4,
         "timestamp": "2026-04-14T23:47:48.234123"
+      },
+      {
+        "type": "rating",
+        "city": "Bengaluru",
+        "rating": 9,
+        "timestamp": "2026-04-15T00:31:49.880779"
+      },
+      {
+        "type": "rating",
+        "city": "Mumbai",
+        "rating": 6,
+        "timestamp": "2026-04-15T00:31:49.881156"
+      },
+      {
+        "type": "rating",
+        "city": "Delhi",
+        "rating": 4,
+        "timestamp": "2026-04-15T00:31:49.881459"
+      },
+      {
+        "type": "rating",
+        "city": "Bengaluru",
+        "rating": 9,
+        "timestamp": "2026-04-15T00:32:12.333207"
+      },
+      {
+        "type": "rating",
+        "city": "Mumbai",
+        "rating": 6,
+        "timestamp": "2026-04-15T00:32:12.333584"
+      },
+      {
+        "type": "rating",
+        "city": "Delhi",
+        "rating": 4,
+        "timestamp": "2026-04-15T00:32:12.333906"
       }
     ],
     "constraints": {},
-    "updated_at": "2026-04-14T23:47:48.241091"
+    "updated_at": "2026-04-15T00:32:12.339929"
   }
 }
