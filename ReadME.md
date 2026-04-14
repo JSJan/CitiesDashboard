@@ -25,7 +25,31 @@ A data-driven analysis project that rates Indian cities across multiple dimensio
 | Population | `python main.py --report population` | Growth rates, density, carrying capacity |
 | Master Ranking | `python main.py --report ranking` | Overall city scoring and ranking |
 | Buy Recommendations | `python main.py --report buy` | Top cities to invest in today |
-| City Deep Dive | `python main.py --city Chennai` | Detailed analysis for one city |
+| Chennai Areas | `python main.py --report chennai` | Chennai 30-area zone-level analysis |
+| CSV Export | `python main.py --report export` | Export all reports to `assets/` as CSV |
+| Live Data | `python main.py --report climate --live` | Fetch real-time API data before reporting |
+
+## Web Dashboard
+
+An interactive web dashboard built with **Streamlit + Plotly** provides charts, filters, and an investment calculator.
+
+```bash
+streamlit run dashboard.py
+```
+
+Opens at **http://localhost:8501** with 7 pages:
+
+| Page | Description |
+|------|-------------|
+| Master Ranking | Color-coded city scores with grouped bar chart |
+| City Comparison | Radar chart comparing 2–4 cities across 6 dimensions |
+| Climate Analysis | Temperature projections and AQI trajectory charts |
+| Land Price Analysis | Price timeline 2015–2070, buy recommendations |
+| Population Analysis | Growth projections and density scatter plot |
+| Chennai Areas | Zone summary, area ranking, price-vs-CAGR scatter |
+| Investment Calculator | ROI estimator for any city or Chennai area |
+
+Sidebar filters: **City Tier** (1/2/3) and **State**.
 
 ## Cities Covered (20)
 
@@ -69,15 +93,22 @@ A data-driven analysis project that rates Indian cities across multiple dimensio
 ## Project Structure
 
 ```
-├── main.py                     # Entry point - generates all reports
+├── main.py                     # CLI entry point — generates all reports
+├── dashboard.py                # Streamlit web dashboard (7 pages)
 ├── requirements.txt            # Python dependencies
 ├── src/
 │   ├── models.py               # Data models (CityProfile, ClimateData, etc.)
 │   ├── seed_data.py            # Seed data for 20 Indian cities
+│   ├── area_models.py          # Area-level data models
+│   ├── chennai_areas_data.py   # 30 Chennai areas across 6 zones
+│   ├── chennai_area_analysis.py # Chennai area scoring & ranking
 │   ├── climate_analysis.py     # Climate risk scoring & projections
 │   ├── land_price_analysis.py  # Land price CAGR & ROI analysis
 │   ├── population_analysis.py  # Population logistic growth modeling
-│   └── scoring_engine.py       # Composite scoring & ranking engine
+│   ├── scoring_engine.py       # Composite scoring & ranking engine
+│   ├── csv_export.py           # CSV export (11 files to assets/)
+│   └── data_fetchers.py        # Live API data fetchers (Open-Meteo, OWM)
+├── assets/                     # Generated CSV exports
 ├── Prompts/                    # Project prompts
 └── PromptEngineering/          # Learning notes
 ```
@@ -86,7 +117,12 @@ A data-driven analysis project that rates Indian cities across multiple dimensio
 
 ```bash
 pip install -r requirements.txt
+
+# CLI reports
 python main.py
+
+# Web dashboard
+streamlit run dashboard.py
 ```
 
 ## Data Sources Referenced

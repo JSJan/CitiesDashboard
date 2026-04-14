@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.3.0] - 2026-04-14
+
+### Added
+- **Interactive Web Dashboard** (`dashboard.py`) — Streamlit + Plotly web app with 7 pages:
+  - Master Ranking — overall city scores with color-coded table and grouped bar chart
+  - City Comparison — radar chart comparison of 2–4 cities across 6 dimensions
+  - Climate Analysis — temperature projections and AQI trajectory charts
+  - Land Price Analysis — price timeline 2015–2070 with buy recommendations
+  - Population Analysis — logistic growth projections and growth-vs-density scatter
+  - Chennai Areas — zone summary, area ranking with price-vs-CAGR scatter, buy recs
+  - Investment Calculator — ROI estimator for any city or Chennai area with timeline chart
+- **Real-Time Data Fetchers** (`src/data_fetchers.py`)
+  - Open-Meteo API integration (current weather, historical climate, CMIP6 projections)
+  - OpenWeatherMap API integration (AQI air pollution data, optional)
+  - SSL fallback for macOS certificate issues
+- **Live Data CLI Flag** — `python3 main.py --report climate --live` fetches real API data before generating reports
+- **Implementation Guide** (`Implementation.md`) — comprehensive data source mapping, API integration guide, and phased implementation roadmap
+- Sidebar filters for city tier and state on all dashboard pages
+- `streamlit>=1.30` and `plotly>=5.18` added to `requirements.txt`
+
+---
+
 ## [0.2.0] - 2026-04-14
 
 ### Added

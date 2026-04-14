@@ -46,9 +46,11 @@ This installs:
 |---------|---------|
 | pandas | Data manipulation and report generation |
 | numpy | Numerical computations (logistic growth, projections) |
-| matplotlib | Plotting (reserved for future dashboard) |
-| seaborn | Statistical visualizations (reserved for future dashboard) |
+| matplotlib | Plotting (reserved for future use) |
+| seaborn | Statistical visualizations (reserved for future use) |
 | tabulate | Pretty-printing tables in the terminal |
+| streamlit | Interactive web dashboard framework |
+| plotly | Interactive charts and visualizations |
 
 ---
 
@@ -77,6 +79,37 @@ python3 main.py --city Mysuru
 
 Available cities: Mumbai, Delhi, Bengaluru, Chennai, Hyderabad, Kolkata, Pune, Ahmedabad, Coimbatore, Jaipur, Lucknow, Chandigarh, Kochi, Indore, Thiruvananthapuram, Visakhapatnam, Mysuru, Vadodara, Bhubaneswar
 
+### Live API Data
+```bash
+python3 main.py --report climate --live    # Fetch real-time weather data before report
+python3 main.py --report all --live         # All reports with live data
+```
+Requires internet connection. Optionally set `OWM_API_KEY` environment variable for AQI data from OpenWeatherMap.
+
+---
+
+## Step 5: Run the Web Dashboard
+
+The interactive web dashboard provides charts, filters, and an investment calculator.
+
+```bash
+streamlit run dashboard.py
+```
+
+This opens the dashboard at **http://localhost:8501** with 7 pages:
+
+| Page | Description |
+|------|-------------|
+| Master Ranking | Overall city scores with color-coded table and bar chart |
+| City Comparison | Radar chart comparing 2–4 cities across 6 dimensions |
+| Climate Analysis | Temperature projections and AQI trajectory |
+| Land Price Analysis | Price timeline 2015–2070, buy recommendations |
+| Population Analysis | Growth projections and density scatter plot |
+| Chennai Areas | Zone summary, area ranking, buy recommendations |
+| Investment Calculator | ROI estimator for any city or Chennai area |
+
+Use the sidebar to filter by **City Tier** (1/2/3) and **State**.
+
 ---
 
 ## Project Structure
@@ -90,14 +123,23 @@ CitiesDashboard/
 ├── CHANGELOG.md                # Version history
 ├── CONTRIBUTING.md             # Contribution guidelines
 ├── LocalSetup.md               # This file
+├── Implementation.md           # Data sources & integration guide
+├── NextSteps.md                # ML/LLM optimization analysis
+├── dashboard.py                # Streamlit web dashboard
 ├── src/
 │   ├── __init__.py             # Package init
 │   ├── models.py               # Data models (dataclasses)
 │   ├── seed_data.py            # City data for 20 Indian cities
+│   ├── area_models.py          # Area-level data models
+│   ├── chennai_areas_data.py   # 30 Chennai areas seed data
+│   ├── chennai_area_analysis.py # Chennai area scoring & ranking
 │   ├── climate_analysis.py     # Climate risk scoring & projections
 │   ├── land_price_analysis.py  # Land price CAGR & ROI analysis
 │   ├── population_analysis.py  # Logistic growth modeling
-│   └── scoring_engine.py       # Composite scoring & ranking
+│   ├── scoring_engine.py       # Composite scoring & ranking
+│   ├── csv_export.py           # CSV export (11 files to assets/)
+│   └── data_fetchers.py        # Live API data fetchers
+├── assets/                     # Generated CSV exports
 ├── Prompts/
 │   └── prompt1.md              # Initial project prompt
 └── PromptEngineering/

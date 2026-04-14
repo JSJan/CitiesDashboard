@@ -41,6 +41,7 @@ from src.chennai_area_analysis import (
     get_top_areas_to_buy,
 )
 from src.csv_export import export_all
+from src.data_fetchers import fetch_all_for_city
 
 
 def print_section(title: str, df: pd.DataFrame):
@@ -217,6 +218,11 @@ def main():
         type=str,
         help="Deep dive into a specific city (e.g., --city Bengaluru)",
     )
+    parser.add_argument(
+        "--live",
+        action="store_true",
+        help="Fetch live weather/AQI data from APIs instead of using seed data",
+    )
 
     args = parser.parse_args()
     cities = get_all_cities()
@@ -227,6 +233,25 @@ def main():
     print("║" + "  Sustainability • Liveability • Climate • Land Investment • Population".center(98) + "║")
     print("║" + "  Projections: 2025 → 2050 → 2070".center(98) + "║")
     print("╚" + "═" * 98 + "╝")
+
+    if args.live:
+        print("\n  Fetching live data from APIs (Open-Meteo + OpenWeatherMap)...")
+        print("  " + "-" * 60)
+        for city in cities:
+            live = fetch_all_for_city(city.geo.latitude, city.geo.longitude, city.name)
+            # Update seed data with live values where available
+            if "historical_climate" in live:
+                hist = live["historical_climate"]
+                if hist.get("avg_temp_c"):
+                    city.climate.avg_temp_c = hist["avg_temp_c"]
+                if hist.get("total_rainfall_mm_per_year"):
+                    city.climate.avg_rainfall_mm = hist["total_rainfall_mm_per_year"]
+                if hist.get("avg_humidity_pct"):
+                    city.climate.humidity_pct = hist["avg_humidity_pct"]
+            if "aqi" in live:
+                city.climate.air_quality_index = live["aqi"]["aqi_india_approx"]
+        print("  " + "-" * 60)
+        print("  Live data merged with seed data.\n")
 
     if args.city:
         run_city_deep_dive(cities, args.city)
