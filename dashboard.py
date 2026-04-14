@@ -597,7 +597,12 @@ elif page == "🤖 AI Query":
     )
 
     engine = QueryEngine(cities=cities, areas=areas)
-    method_label = "LLM (GPT-4o-mini)" if engine.openai_client else "Rule-based"
+    if engine.llm_provider == "anthropic":
+        method_label = "LLM (Claude)"
+    elif engine.llm_provider == "openai":
+        method_label = "LLM (GPT-4o-mini)"
+    else:
+        method_label = "Rule-based"
     st.caption(f"Engine: **{method_label}**")
 
     question = st.text_input(

@@ -8,7 +8,8 @@ Supports:
   - Recommendation queries ("Best area in Chennai to buy land today")
   - Analytical queries ("How will climate change affect Bengaluru?")
 
-Requires: openai (optional — falls back to rule-based parsing)
+LLM backends: Anthropic Claude (ANTHROPIC_API_KEY) or OpenAI (OPENAI_API_KEY).
+Falls back to rule-based parsing when no API key is available.
 """
 
 import os
@@ -17,7 +18,7 @@ import re
 from typing import Dict, List, Optional, Callable
 
 
-# Tool definitions for function calling
+# Tool definitions for OpenAI function calling
 TOOL_DEFINITIONS = [
     {
         "type": "function",
@@ -112,30 +113,121 @@ TOOL_DEFINITIONS = [
 ]
 
 
+# Anthropic tool definitions (different schema format)
+ANTHROPIC_TOOLS = [
+    {
+        "name": "get_city_ranking",
+        "description": "Get the master ranking of all cities with scores",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "top_n": {"type": "integer", "description": "Number of top cities to return"},
+                "sort_by": {"type": "string", "enum": ["overall", "liveability", "sustainability", "investment"]},
+                "tier": {"type": "integer", "description": "Filter by tier (1, 2, or 3)"},
+            },
+        },
+    },
+    {
+        "name": "compare_cities",
+        "description": "Compare 2-4 cities across all dimensions",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "cities": {"type": "array", "items": {"type": "string"}, "description": "List of city names"},
+            },
+            "required": ["cities"],
+        },
+    },
+    {
+        "name": "get_land_price_info",
+        "description": "Get land price details and projections for a city",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "city": {"type": "string"},
+                "year": {"type": "integer", "description": "Target year for projection"},
+            },
+            "required": ["city"],
+        },
+    },
+    {
+        "name": "filter_cities",
+        "description": "Filter cities by constraints like AQI, price, tier, etc.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "max_aqi": {"type": "number"},
+                "max_price": {"type": "number"},
+                "min_green_cover": {"type": "number"},
+                "tier": {"type": "integer"},
+                "no_flood_risk": {"type": "boolean"},
+            },
+        },
+    },
+    {
+        "name": "get_chennai_areas",
+        "description": "Get Chennai area recommendations by zone or criteria",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "zone": {"type": "string"},
+                "max_price": {"type": "number"},
+                "top_n": {"type": "integer"},
+            },
+        },
+    },
+    {
+        "name": "get_climate_analysis",
+        "description": "Get climate change analysis and risk for a city",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "city": {"type": "string"},
+            },
+            "required": ["city"],
+        },
+    },
+]
+
+
 class QueryEngine:
     """
     Natural language query engine with LLM function calling.
-    Falls back to rule-based parsing when no LLM API key is available.
+    Supports Anthropic Claude or OpenAI GPT. Falls back to rule-based parsing
+    when no API key is available.
     """
 
     def __init__(self, cities: list = None, areas: list = None):
         self.cities = cities
         self.areas = areas
         self.openai_client = None
-        self._init_openai()
+        self.anthropic_client = None
+        self.llm_provider = None  # "anthropic" or "openai"
+        self._init_llm()
         self._init_tools()
 
-    def _init_openai(self):
-        """Initialize OpenAI client if API key is available."""
-        api_key = os.environ.get("OPENAI_API_KEY")
-        if not api_key:
-            return
+    def _init_llm(self):
+        """Initialize LLM client — prefers Anthropic, then OpenAI."""
+        # Try Anthropic first
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key:
+            try:
+                import anthropic
+                self.anthropic_client = anthropic.Anthropic(api_key=api_key)
+                self.llm_provider = "anthropic"
+                return
+            except ImportError:
+                pass
 
-        try:
-            import openai
-            self.openai_client = openai.OpenAI(api_key=api_key)
-        except ImportError:
-            pass
+        # Fall back to OpenAI
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if api_key:
+            try:
+                import openai
+                self.openai_client = openai.OpenAI(api_key=api_key)
+                self.llm_provider = "openai"
+            except ImportError:
+                pass
 
     def _init_tools(self):
         """Register tool functions."""
@@ -154,11 +246,84 @@ class QueryEngine:
         Uses LLM if available, otherwise falls back to rule-based parsing.
 
         Returns:
-            {"answer": str, "data": dict/list, "method": "llm"|"rules"}
+            {"answer": str, "data": dict/list, "method": "llm"|"rules", "provider": str}
         """
+        if self.anthropic_client:
+            return self._query_with_anthropic(question)
         if self.openai_client:
             return self._query_with_llm(question)
         return self._query_with_rules(question)
+
+    def _query_with_anthropic(self, question: str) -> Dict:
+        """Use Anthropic Claude with tool use to answer queries."""
+        system_prompt = (
+            "You are an expert on Indian cities — sustainability, liveability, "
+            "climate, land prices, and population. Use the provided tools to "
+            "answer questions with data. Be concise and specific."
+        )
+
+        try:
+            response = self.anthropic_client.messages.create(
+                model="claude-sonnet-4-20250514",
+                max_tokens=1024,
+                system=system_prompt,
+                tools=ANTHROPIC_TOOLS,
+                messages=[{"role": "user", "content": question}],
+            )
+
+            # Check if Claude wants to use tools
+            tool_uses = [b for b in response.content if b.type == "tool_use"]
+
+            if tool_uses:
+                results = {}
+                tool_results = []
+                for tool_use in tool_uses:
+                    fn_name = tool_use.name
+                    fn_args = tool_use.input
+
+                    if fn_name in self.tools:
+                        result = self.tools[fn_name](**fn_args)
+                        results[fn_name] = result
+                        tool_results.append({
+                            "type": "tool_result",
+                            "tool_use_id": tool_use.id,
+                            "content": json.dumps(result, default=str),
+                        })
+
+                # Get final response with tool results
+                final = self.anthropic_client.messages.create(
+                    model="claude-sonnet-4-20250514",
+                    max_tokens=1024,
+                    system=system_prompt,
+                    tools=ANTHROPIC_TOOLS,
+                    messages=[
+                        {"role": "user", "content": question},
+                        {"role": "assistant", "content": response.content},
+                        {"role": "user", "content": tool_results},
+                    ],
+                )
+                # Extract text from response
+                text_blocks = [b.text for b in final.content if b.type == "text"]
+                return {
+                    "answer": "\n".join(text_blocks) if text_blocks else None,
+                    "data": results,
+                    "method": "llm",
+                    "provider": "anthropic",
+                }
+
+            # No tool use — direct text answer
+            text_blocks = [b.text for b in response.content if b.type == "text"]
+            return {
+                "answer": "\n".join(text_blocks) if text_blocks else None,
+                "data": None,
+                "method": "llm",
+                "provider": "anthropic",
+            }
+
+        except Exception as e:
+            result = self._query_with_rules(question)
+            result["llm_error"] = str(e)
+            return result
 
     def _query_with_llm(self, question: str) -> Dict:
         """Use OpenAI function calling to answer queries."""

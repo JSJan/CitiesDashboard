@@ -2,7 +2,7 @@
   "flood_r2": -0.6805,
   "heat_r2": -0.0388,
   "n_samples": 33,
-  "trained_at": "2026-04-15T00:32:12.327337",
+  "trained_at": "2026-04-15T01:18:37.532822",
   "flood_feature_importance": {
     "cyclone_risk_num": 0.3185,
     "elevation_m": 0.1859,

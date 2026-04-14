@@ -202,9 +202,27 @@
         "city": "Delhi",
         "rating": 4,
         "timestamp": "2026-04-15T00:32:12.333906"
+      },
+      {
+        "type": "rating",
+        "city": "Bengaluru",
+        "rating": 9,
+        "timestamp": "2026-04-15T01:18:37.541175"
+      },
+      {
+        "type": "rating",
+        "city": "Mumbai",
+        "rating": 6,
+        "timestamp": "2026-04-15T01:18:37.541891"
+      },
+      {
+        "type": "rating",
+        "city": "Delhi",
+        "rating": 4,
+        "timestamp": "2026-04-15T01:18:37.542250"
       }
     ],
     "constraints": {},
-    "updated_at": "2026-04-15T00:32:12.339929"
+    "updated_at": "2026-04-15T01:18:37.547497"
   }
 }

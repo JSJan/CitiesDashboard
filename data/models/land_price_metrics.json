@@ -3,7 +3,7 @@
   "r2_std": 0.0622,
   "n_samples": 231,
   "n_features": 12,
-  "trained_at": "2026-04-15T00:32:12.142394",
+  "trained_at": "2026-04-15T01:18:37.309873",
   "feature_names": [
     "cagr_2015_2025",
     "tier",
