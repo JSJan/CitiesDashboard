@@ -102,3 +102,5 @@ Prompt 12
 
 Need details on Hill stations across south india and north india
 Investments and land price and return on investments
+
+Your OpenAI account has no quota — error 429 insufficient_quota. You need to add billing at https://platform.openai.com/settings/organization/billing/overview
