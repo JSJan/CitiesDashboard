@@ -91,8 +91,8 @@
   "test_validation": {
     "weights": {
       "liveability": 0.178,
-      "sustainability": 0.548,
-      "investment": 0.274
+      "sustainability": 0.549,
+      "investment": 0.273
     },
     "feedback": [
       {
@@ -130,9 +130,45 @@
         "city": "Delhi",
         "rating": 4,
         "timestamp": "2026-04-14T18:19:22.888990"
+      },
+      {
+        "type": "rating",
+        "city": "Bengaluru",
+        "rating": 9,
+        "timestamp": "2026-04-14T23:32:32.237727"
+      },
+      {
+        "type": "rating",
+        "city": "Mumbai",
+        "rating": 6,
+        "timestamp": "2026-04-14T23:32:32.238064"
+      },
+      {
+        "type": "rating",
+        "city": "Delhi",
+        "rating": 4,
+        "timestamp": "2026-04-14T23:32:32.238344"
+      },
+      {
+        "type": "rating",
+        "city": "Bengaluru",
+        "rating": 9,
+        "timestamp": "2026-04-14T23:47:48.233548"
+      },
+      {
+        "type": "rating",
+        "city": "Mumbai",
+        "rating": 6,
+        "timestamp": "2026-04-14T23:47:48.233849"
+      },
+      {
+        "type": "rating",
+        "city": "Delhi",
+        "rating": 4,
+        "timestamp": "2026-04-14T23:47:48.234123"
       }
     ],
     "constraints": {},
-    "updated_at": "2026-04-14T18:19:22.897924"
+    "updated_at": "2026-04-14T23:47:48.241091"
   }
 }

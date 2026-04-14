@@ -63,9 +63,9 @@ def all_cities_scored():
 class TestSeedDataIntegrity:
     """Verify hardcoded seed data is internally consistent."""
 
-    def test_exactly_20_cities(self):
+    def test_exactly_23_cities(self):
         cities = get_all_cities()
-        assert len(cities) == 20, f"Expected 20 cities, got {len(cities)}"
+        assert len(cities) == 23, f"Expected 23 cities, got {len(cities)}"
 
     def test_tier_distribution(self):
         cities = get_all_cities()
@@ -200,7 +200,7 @@ class TestScoringEngine:
 
     def test_ranking_has_all_cities(self):
         df = generate_master_ranking(all_cities_scored())
-        assert len(df) == 20
+        assert len(df) == 23
 
     def test_scores_differ_between_cities(self):
         """Scores should not be identical for all cities (sanity check)."""

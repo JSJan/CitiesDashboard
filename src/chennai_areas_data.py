@@ -481,6 +481,366 @@ def get_chennai_areas():
             ),
             population_density_per_sqkm=3000,
         ),
+
+        # ── Additional Chennai Areas ──
+
+        AreaProfile(
+            name="Guindy", zone="Central", city="Chennai",
+            area_type="mixed", distance_from_center_km=8,
+            metro_connectivity=True, railway_station=True,
+            it_park_proximity=True, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=18.0, current_aqi=72, water_supply_score=7.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=6500, price_per_sqft_2020=8500,
+                price_per_sqft_2025=11000, cagr_2015_2025=5.4,
+                projected_2030=14000, projected_2040=22000,
+                projected_2050=33000, projected_2070=55000,
+            ),
+            population_density_per_sqkm=14000,
+        ),
+
+        AreaProfile(
+            name="Chromepet", zone="South", city="Chennai",
+            area_type="residential", distance_from_center_km=18,
+            metro_connectivity=True, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=10.0, current_aqi=80, water_supply_score=5.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=3200, price_per_sqft_2020=4200,
+                price_per_sqft_2025=5800, cagr_2015_2025=6.1,
+                projected_2030=8000, projected_2040=14000,
+                projected_2050=25000, projected_2070=50000,
+            ),
+            population_density_per_sqkm=18000,
+        ),
+
+        AreaProfile(
+            name="Pallavaram", zone="South", city="Chennai",
+            area_type="mixed", distance_from_center_km=20,
+            metro_connectivity=True, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=8.0, current_aqi=85, water_supply_score=5.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=2800, price_per_sqft_2020=3800,
+                price_per_sqft_2025=5200, cagr_2015_2025=6.4,
+                projected_2030=7500, projected_2040=13000,
+                projected_2050=23000, projected_2070=45000,
+            ),
+            population_density_per_sqkm=15000,
+        ),
+
+        AreaProfile(
+            name="Perambur", zone="North", city="Chennai",
+            area_type="residential", distance_from_center_km=6,
+            metro_connectivity=False, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=8.0, current_aqi=90, water_supply_score=5.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=4000, price_per_sqft_2020=5200,
+                price_per_sqft_2025=6800, cagr_2015_2025=5.4,
+                projected_2030=9000, projected_2040=14000,
+                projected_2050=22000, projected_2070=42000,
+            ),
+            population_density_per_sqkm=22000,
+        ),
+
+        AreaProfile(
+            name="Thiruverkadu", zone="West", city="Chennai",
+            area_type="residential", distance_from_center_km=16,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=False, hospital_proximity=False,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=15.0, current_aqi=70, water_supply_score=4.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=1500, price_per_sqft_2020=2400,
+                price_per_sqft_2025=3800, cagr_2015_2025=9.7,
+                projected_2030=6000, projected_2040=13000,
+                projected_2050=28000, projected_2070=65000,
+            ),
+            population_density_per_sqkm=8000,
+        ),
+
+        AreaProfile(
+            name="Pallikaranai", zone="South", city="Chennai",
+            area_type="mixed", distance_from_center_km=17,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=True, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=12.0, current_aqi=68, water_supply_score=5.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=2800, price_per_sqft_2020=4200,
+                price_per_sqft_2025=6200, cagr_2015_2025=8.3,
+                projected_2030=9000, projected_2040=17000,
+                projected_2050=32000, projected_2070=68000,
+            ),
+            population_density_per_sqkm=12000,
+        ),
+
+        # ── Inner Chennai — Additional Areas ──
+
+        AreaProfile(
+            name="Ayanavaram", zone="North", city="Chennai",
+            area_type="residential", distance_from_center_km=5,
+            metro_connectivity=True, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=8.0, current_aqi=88, water_supply_score=6.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=4500, price_per_sqft_2020=5800,
+                price_per_sqft_2025=7500, cagr_2015_2025=5.2,
+                projected_2030=9500, projected_2040=15000,
+                projected_2050=24000, projected_2070=45000,
+            ),
+            population_density_per_sqkm=25000,
+        ),
+
+        AreaProfile(
+            name="Kolathur", zone="North", city="Chennai",
+            area_type="residential", distance_from_center_km=10,
+            metro_connectivity=True, railway_station=False,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=7.0, current_aqi=82, water_supply_score=5.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=3000, price_per_sqft_2020=4200,
+                price_per_sqft_2025=6000, cagr_2015_2025=7.2,
+                projected_2030=8500, projected_2040=15000,
+                projected_2050=27000, projected_2070=55000,
+            ),
+            population_density_per_sqkm=18000,
+        ),
+
+        AreaProfile(
+            name="Saligramam", zone="West", city="Chennai",
+            area_type="mixed", distance_from_center_km=8,
+            metro_connectivity=True, railway_station=True,
+            it_park_proximity=True, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=10.0, current_aqi=75, water_supply_score=7.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=6000, price_per_sqft_2020=8000,
+                price_per_sqft_2025=10500, cagr_2015_2025=5.8,
+                projected_2030=13500, projected_2040=21000,
+                projected_2050=32000, projected_2070=58000,
+            ),
+            population_density_per_sqkm=20000,
+        ),
+
+        AreaProfile(
+            name="Arumbakkam", zone="Central", city="Chennai",
+            area_type="residential", distance_from_center_km=7,
+            metro_connectivity=True, railway_station=False,
+            it_park_proximity=True, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=9.0, current_aqi=78, water_supply_score=6.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=5500, price_per_sqft_2020=7200,
+                price_per_sqft_2025=9500, cagr_2015_2025=5.6,
+                projected_2030=12000, projected_2040=19000,
+                projected_2050=30000, projected_2070=55000,
+            ),
+            population_density_per_sqkm=22000,
+        ),
+
+        AreaProfile(
+            name="Gerukambakkam", zone="West", city="Chennai",
+            area_type="residential", distance_from_center_km=15,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=True, hospital_proximity=False,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=18.0, current_aqi=62, water_supply_score=4.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=1800, price_per_sqft_2020=2800,
+                price_per_sqft_2025=4200, cagr_2015_2025=8.8,
+                projected_2030=6500, projected_2040=13000,
+                projected_2050=26000, projected_2070=62000,
+            ),
+            population_density_per_sqkm=6000,
+        ),
+
+        AreaProfile(
+            name="Nolambur", zone="West", city="Chennai",
+            area_type="residential", distance_from_center_km=12,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=True, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=12.0, current_aqi=68, water_supply_score=5.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=3200, price_per_sqft_2020=4500,
+                price_per_sqft_2025=6500, cagr_2015_2025=7.3,
+                projected_2030=9000, projected_2040=16000,
+                projected_2050=28000, projected_2070=58000,
+            ),
+            population_density_per_sqkm=10000,
+        ),
+
+        # ── Chennai Outskirts ──
+
+        AreaProfile(
+            name="Oragadam", zone="Outskirts", city="Chennai",
+            area_type="industrial", distance_from_center_km=45,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=True, hospital_proximity=False,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=25.0, current_aqi=50, water_supply_score=4.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=600, price_per_sqft_2020=1200,
+                price_per_sqft_2025=2200, cagr_2015_2025=13.9,
+                projected_2030=4000, projected_2040=10000,
+                projected_2050=25000, projected_2070=70000,
+            ),
+            population_density_per_sqkm=1500,
+        ),
+
+        AreaProfile(
+            name="Guduvanchery", zone="Outskirts", city="Chennai",
+            area_type="residential", distance_from_center_km=35,
+            metro_connectivity=False, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=20.0, current_aqi=55, water_supply_score=4.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=800, price_per_sqft_2020=1600,
+                price_per_sqft_2025=2800, cagr_2015_2025=13.3,
+                projected_2030=5000, projected_2040=12000,
+                projected_2050=28000, projected_2070=72000,
+            ),
+            population_density_per_sqkm=3000,
+        ),
+
+        AreaProfile(
+            name="Thirumazhisai", zone="Outskirts", city="Chennai",
+            area_type="residential", distance_from_center_km=25,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=False, hospital_proximity=False,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=22.0, current_aqi=52, water_supply_score=4.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=700, price_per_sqft_2020=1400,
+                price_per_sqft_2025=2500, cagr_2015_2025=13.6,
+                projected_2030=4500, projected_2040=11000,
+                projected_2050=26000, projected_2070=68000,
+            ),
+            population_density_per_sqkm=2500,
+        ),
+
+        AreaProfile(
+            name="Red Hills", zone="Outskirts", city="Chennai",
+            area_type="residential", distance_from_center_km=22,
+            metro_connectivity=False, railway_station=True,
+            it_park_proximity=False, hospital_proximity=False,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=20.0, current_aqi=58, water_supply_score=5.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=900, price_per_sqft_2020=1500,
+                price_per_sqft_2025=2600, cagr_2015_2025=11.2,
+                projected_2030=4200, projected_2040=10000,
+                projected_2050=22000, projected_2070=55000,
+            ),
+            population_density_per_sqkm=4000,
+        ),
+
+        AreaProfile(
+            name="Chengalpattu", zone="Outskirts", city="Chennai",
+            area_type="mixed", distance_from_center_km=55,
+            metro_connectivity=False, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=28.0, current_aqi=48, water_supply_score=5.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=500, price_per_sqft_2020=1000,
+                price_per_sqft_2025=1800, cagr_2015_2025=13.7,
+                projected_2030=3200, projected_2040=8500,
+                projected_2050=22000, projected_2070=65000,
+            ),
+            population_density_per_sqkm=2000,
+        ),
+
+        # ── Pondicherry Areas ──
+
+        AreaProfile(
+            name="White Town", zone="Central", city="Pondicherry",
+            area_type="mixed", distance_from_center_km=0,
+            metro_connectivity=False, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=True, flood_prone=False,
+            green_cover_pct=25.0, current_aqi=35, water_supply_score=6.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=4500, price_per_sqft_2020=7000,
+                price_per_sqft_2025=10000, cagr_2015_2025=8.3,
+                projected_2030=14500, projected_2040=27000,
+                projected_2050=48000, projected_2070=95000,
+            ),
+            population_density_per_sqkm=5000,
+        ),
+
+        AreaProfile(
+            name="Auroville", zone="West", city="Pondicherry",
+            area_type="residential", distance_from_center_km=10,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=False, hospital_proximity=False,
+            coastal_proximity=False, flood_prone=False,
+            green_cover_pct=55.0, current_aqi=28, water_supply_score=5.0,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=1200, price_per_sqft_2020=2000,
+                price_per_sqft_2025=3200, cagr_2015_2025=10.3,
+                projected_2030=5200, projected_2040=12000,
+                projected_2050=25000, projected_2070=60000,
+            ),
+            population_density_per_sqkm=500,
+        ),
+
+        AreaProfile(
+            name="Lawspet", zone="North", city="Pondicherry",
+            area_type="residential", distance_from_center_km=4,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=18.0, current_aqi=42, water_supply_score=5.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=2000, price_per_sqft_2020=3000,
+                price_per_sqft_2025=4500, cagr_2015_2025=8.4,
+                projected_2030=6500, projected_2040=12000,
+                projected_2050=22000, projected_2070=48000,
+            ),
+            population_density_per_sqkm=8000,
+        ),
+
+        AreaProfile(
+            name="ECR Pondicherry", zone="South", city="Pondicherry",
+            area_type="residential", distance_from_center_km=6,
+            metro_connectivity=False, railway_station=False,
+            it_park_proximity=False, hospital_proximity=False,
+            coastal_proximity=True, flood_prone=False,
+            green_cover_pct=30.0, current_aqi=32, water_supply_score=4.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=1800, price_per_sqft_2020=2800,
+                price_per_sqft_2025=4200, cagr_2015_2025=8.8,
+                projected_2030=6500, projected_2040=13000,
+                projected_2050=26000, projected_2070=58000,
+            ),
+            population_density_per_sqkm=3500,
+        ),
+
+        AreaProfile(
+            name="Mudaliarpet", zone="Central", city="Pondicherry",
+            area_type="commercial", distance_from_center_km=2,
+            metro_connectivity=False, railway_station=True,
+            it_park_proximity=False, hospital_proximity=True,
+            coastal_proximity=False, flood_prone=True,
+            green_cover_pct=12.0, current_aqi=48, water_supply_score=5.5,
+            land_price=AreaLandPrice(
+                price_per_sqft_2015=3000, price_per_sqft_2020=4500,
+                price_per_sqft_2025=6500, cagr_2015_2025=8.0,
+                projected_2030=9500, projected_2040=18000,
+                projected_2050=33000, projected_2070=70000,
+            ),
+            population_density_per_sqkm=12000,
+        ),
     ]
 
     return areas

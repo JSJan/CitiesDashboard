@@ -16,11 +16,13 @@ import plotly.graph_objects as go
 
 from src.seed_data import get_all_cities
 from src.chennai_areas_data import get_chennai_areas
+from src.world_cities_data import get_world_cities, USD_TO_INR
 from src.climate_analysis import generate_climate_report, climate_risk_score
 from src.land_price_analysis import generate_land_report, generate_price_timeline, monte_carlo_price_simulation
 from src.population_analysis import generate_population_report, generate_population_timeline, estimate_carrying_capacity
 from src.scoring_engine import generate_master_ranking, get_top_cities_to_buy, compute_all_scores
 from src.chennai_area_analysis import generate_area_ranking, generate_zone_summary, get_top_areas_to_buy
+from src.llm.query_engine import QueryEngine
 
 
 # ────────────────────────── PAGE CONFIG ──────────────────────────
@@ -44,8 +46,13 @@ def load_cities():
 def load_chennai_areas():
     return get_chennai_areas()
 
+@st.cache_data
+def load_world_cities():
+    return get_world_cities()
+
 cities = load_cities()
 areas = load_chennai_areas()
+world_cities = load_world_cities()
 
 # ────────────────────────── SIDEBAR ──────────────────────────
 
@@ -59,7 +66,11 @@ page = st.sidebar.radio(
         "Land Price Analysis",
         "Population Analysis",
         "Chennai Areas",
+        "Pondicherry Areas",
         "Investment Calculator",
+        "🤖 AI Query",
+        "🌍 World Cities",
+        "📈 Price Timeline",
     ],
 )
 
@@ -353,10 +364,12 @@ elif page == "Population Analysis":
 elif page == "Chennai Areas":
     st.header("Chennai — Zone & Area-Level Analysis")
 
+    chennai_areas = [a for a in areas if a.city == "Chennai"]
+
     tab1, tab2, tab3 = st.tabs(["Zone Summary", "Area Ranking", "Buy Recommendations"])
 
     with tab1:
-        zone_df = generate_zone_summary(areas)
+        zone_df = generate_zone_summary(chennai_areas)
         st.dataframe(zone_df, width="stretch", hide_index=True)
 
         # Zone price comparison
@@ -369,9 +382,9 @@ elif page == "Chennai Areas":
 
     with tab2:
         # Zone filter for areas
-        zone_names = sorted(set(a.zone for a in areas))
+        zone_names = sorted(set(a.zone for a in chennai_areas))
         zone_filter = st.multiselect("Filter by Zone", zone_names, default=zone_names)
-        filtered_areas = [a for a in areas if a.zone in zone_filter]
+        filtered_areas = [a for a in chennai_areas if a.zone in zone_filter]
 
         rank_df = generate_area_ranking(filtered_areas)
         st.dataframe(
@@ -396,7 +409,7 @@ elif page == "Chennai Areas":
         st.plotly_chart(fig, width="stretch")
 
     with tab3:
-        buy_df = get_top_areas_to_buy(areas, top_n=15)
+        buy_df = get_top_areas_to_buy(chennai_areas, top_n=15)
         st.dataframe(buy_df, width="stretch", hide_index=True)
 
 
@@ -481,3 +494,339 @@ elif page == "Investment Calculator":
         "**Disclaimer:** Projections are based on historical CAGR trends and are estimates only. "
         "Actual returns may vary significantly. This is not financial advice."
     )
+
+elif page == "Pondicherry Areas":
+    st.header("Pondicherry — Area-Level Analysis")
+
+    pondy_areas = [a for a in areas if a.city == "Pondicherry"]
+    if not pondy_areas:
+        st.warning("No Pondicherry area data available.")
+    else:
+        tab1, tab2 = st.tabs(["Area Ranking", "Price Comparison"])
+
+        with tab1:
+            rank_df = generate_area_ranking(pondy_areas)
+            st.dataframe(
+                rank_df.style.background_gradient(subset=["Overall"], cmap="RdYlGn"),
+                width="stretch", hide_index=True,
+            )
+
+        with tab2:
+            scatter_data = pd.DataFrame([{
+                "Area": a.name, "Zone": a.zone,
+                "Price 2025": a.land_price.price_per_sqft_2025,
+                "CAGR %": a.land_price.cagr_2015_2025,
+                "Coastal": a.coastal_proximity,
+            } for a in pondy_areas])
+            fig = px.scatter(
+                scatter_data, x="Price 2025", y="CAGR %",
+                color="Zone", text="Area",
+                title="Pondicherry — Price vs Growth Rate",
+                size="CAGR %", symbol="Coastal",
+            )
+            fig.update_traces(textposition="top center")
+            st.plotly_chart(fig, width="stretch")
+
+            # Bar chart of projected prices
+            proj_data = pd.DataFrame([{
+                "Area": a.name,
+                "2025": a.land_price.price_per_sqft_2025,
+                "2030": a.land_price.projected_2030,
+                "2050": a.land_price.projected_2050,
+                "2070": a.land_price.projected_2070,
+            } for a in pondy_areas])
+            proj_melt = proj_data.melt(id_vars="Area", var_name="Year", value_name="Price (₹/sqft)")
+            fig2 = px.bar(
+                proj_melt, x="Area", y="Price (₹/sqft)", color="Year",
+                barmode="group", title="Projected Land Prices by Area",
+            )
+            st.plotly_chart(fig2, width="stretch")
+
+
+elif page == "🤖 AI Query":
+    st.header("🤖 AI-Powered Query Interface")
+    st.markdown(
+        "Ask questions in plain English about cities, land prices, climate, "
+        "and investment potential. Uses LLM when available, otherwise rule-based parsing."
+    )
+
+    engine = QueryEngine(cities=cities, areas=areas)
+    method_label = "LLM (GPT-4o-mini)" if engine.openai_client else "Rule-based"
+    st.caption(f"Engine: **{method_label}**")
+
+    question = st.text_input(
+        "Ask a question",
+        placeholder="e.g., Compare Mumbai vs Pune for investment",
+    )
+
+    # Example questions
+    with st.expander("Example questions"):
+        examples = [
+            "Top 5 cities for investment",
+            "Compare Bengaluru vs Chennai vs Hyderabad",
+            "Cities with AQI below 60",
+            "Best area in Chennai to buy land",
+            "Which tier 2 cities have best liveability?",
+            "Cities with price under 5000 per sqft",
+        ]
+        for ex in examples:
+            if st.button(ex, key=f"ex_{ex}"):
+                question = ex
+
+    if question:
+        with st.spinner("Thinking..."):
+            result = engine.query(question)
+
+        answer = result.get("answer")
+        data = result.get("data")
+        intent = result.get("intent", "")
+
+        # Generate summary when rule-based engine returns None answer
+        if answer is None and data is not None:
+            if isinstance(data, list) and len(data) > 0:
+                answer = f"Found **{len(data)}** results for your query ({intent}):"
+            elif isinstance(data, dict):
+                answer = f"Here are the details ({intent}):"
+            else:
+                answer = "Here are the results:"
+
+        st.subheader("Answer")
+        st.markdown(answer or "No answer generated.")
+
+        # Show data if present
+        if data is not None:
+            if isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
+                st.dataframe(pd.DataFrame(data), width="stretch", hide_index=True)
+            elif isinstance(data, dict):
+                st.json(data)
+            elif isinstance(data, pd.DataFrame):
+                st.dataframe(data, width="stretch", hide_index=True)
+
+        st.caption(f"Method: {result.get('method', 'unknown')} | Intent: {result.get('intent', 'N/A')}")
+
+
+elif page == "🌍 World Cities":
+    st.header("🌍 Global City Benchmarks")
+    st.markdown("Compare Indian cities with global counterparts across key metrics.")
+
+    # Build comparison dataframe
+    def _infra_avg(city):
+        i = city.infrastructure
+        return round((i.healthcare_score + i.education_score + i.transport_score + i.water_supply_score) / 4, 1)
+
+    world_data = []
+    for wc in world_cities:
+        usd_price = wc.land_price.avg_price_per_sqft_2025
+        world_data.append({
+            "City": wc.name,
+            "Country": wc.state,
+            "Population (M)": round(wc.population.population_2025 / 1e6, 1),
+            "Price (USD/sqft)": usd_price,
+            "Price (₹/sqft)": int(usd_price * USD_TO_INR),
+            "AQI": wc.climate.air_quality_index,
+            "Green Cover %": wc.infrastructure.green_cover_pct,
+            "Infra Score": _infra_avg(wc),
+        })
+
+    india_data = []
+    for c in cities:
+        inr_price = c.land_price.avg_price_per_sqft_2025
+        india_data.append({
+            "City": c.name,
+            "Country": "India",
+            "Population (M)": round(c.population.population_2025 / 1e6, 1),
+            "Price (USD/sqft)": int(inr_price / USD_TO_INR),
+            "Price (₹/sqft)": inr_price,
+            "AQI": c.climate.air_quality_index,
+            "Green Cover %": c.infrastructure.green_cover_pct,
+            "Infra Score": _infra_avg(c),
+        })
+
+    combined_df = pd.DataFrame(world_data + india_data)
+
+    tab1, tab2, tab3 = st.tabs(["Comparison Table", "Price Comparison", "Liveability Scatter"])
+
+    with tab1:
+        st.dataframe(
+            combined_df.sort_values("Price (USD/sqft)", ascending=False),
+            width="stretch", hide_index=True,
+        )
+
+    with tab2:
+        fig = px.bar(
+            combined_df.sort_values("Price (USD/sqft)", ascending=False),
+            x="City", y="Price (USD/sqft)", color="Country",
+            title="Land Price Comparison — Global vs India (USD/sqft)",
+        )
+        fig.update_xaxes(tickangle=-45)
+        st.plotly_chart(fig, width="stretch")
+
+    with tab3:
+        fig = px.scatter(
+            combined_df, x="AQI", y="Infra Score",
+            color="Country", size="Population (M)", text="City",
+            title="Air Quality vs Infrastructure — Global Benchmark",
+        )
+        fig.update_traces(textposition="top center")
+        fig.update_xaxes(title="AQI (lower is better)")
+        st.plotly_chart(fig, width="stretch")
+
+
+elif page == "📈 Price Timeline":
+    st.header("📈 Land Price Increase Over the Years")
+    st.markdown("Track how land prices have grown and are projected to grow across cities and areas.")
+
+    tab1, tab2, tab3 = st.tabs(["City Price Timeline", "Chennai Area Timeline", "Outskirts Growth"])
+
+    # ── Tab 1: City-level price timelines ──
+    with tab1:
+        city_names = [c.name for c in filtered_cities]
+        selected_cities = st.multiselect(
+            "Select cities to compare", city_names,
+            default=city_names[:5] if len(city_names) >= 5 else city_names,
+            key="pt_cities",
+        )
+
+        timeline_rows = []
+        for c in filtered_cities:
+            if c.name not in selected_cities:
+                continue
+            lp = c.land_price
+            for year, price in [
+                (2015, lp.avg_price_per_sqft_2015),
+                (2020, lp.avg_price_per_sqft_2020),
+                (2025, lp.avg_price_per_sqft_2025),
+                (2030, lp.projected_price_2030),
+                (2040, lp.projected_price_2040),
+                (2050, lp.projected_price_2050),
+                (2070, lp.projected_price_2070),
+            ]:
+                timeline_rows.append({"City": c.name, "Year": year, "Price (₹/sqft)": price})
+
+        if timeline_rows:
+            tl_df = pd.DataFrame(timeline_rows)
+            fig = px.line(
+                tl_df, x="Year", y="Price (₹/sqft)", color="City",
+                markers=True, title="Land Price Timeline — Cities (₹/sqft)",
+            )
+            fig.update_layout(hovermode="x unified")
+            st.plotly_chart(fig, width="stretch")
+
+            # Growth multiplier table
+            growth_rows = []
+            for c in filtered_cities:
+                if c.name not in selected_cities:
+                    continue
+                lp = c.land_price
+                growth_rows.append({
+                    "City": c.name,
+                    "2015 (₹)": f"{lp.avg_price_per_sqft_2015:,.0f}",
+                    "2025 (₹)": f"{lp.avg_price_per_sqft_2025:,.0f}",
+                    "2050 (₹)": f"{lp.projected_price_2050:,.0f}",
+                    "2070 (₹)": f"{lp.projected_price_2070:,.0f}",
+                    "CAGR %": f"{lp.cagr_2015_2025:.1f}",
+                    "10yr Growth": f"{lp.avg_price_per_sqft_2025 / lp.avg_price_per_sqft_2015:.1f}x",
+                    "2025→2050": f"{lp.projected_price_2050 / lp.avg_price_per_sqft_2025:.1f}x",
+                    "2025→2070": f"{lp.projected_price_2070 / lp.avg_price_per_sqft_2025:.1f}x",
+                })
+            st.dataframe(pd.DataFrame(growth_rows), width="stretch", hide_index=True)
+        else:
+            st.info("Select at least one city.")
+
+    # ── Tab 2: Chennai area price timeline ──
+    with tab2:
+        chennai_areas_all = [a for a in areas if a.city == "Chennai" and a.zone != "Outskirts"]
+        area_names = [a.name for a in chennai_areas_all]
+        selected_areas = st.multiselect(
+            "Select Chennai areas", area_names,
+            default=area_names[:6] if len(area_names) >= 6 else area_names,
+            key="pt_areas",
+        )
+
+        area_rows = []
+        for a in chennai_areas_all:
+            if a.name not in selected_areas:
+                continue
+            lp = a.land_price
+            for year, price in [
+                (2015, lp.price_per_sqft_2015),
+                (2020, lp.price_per_sqft_2020),
+                (2025, lp.price_per_sqft_2025),
+                (2030, lp.projected_2030),
+                (2040, lp.projected_2040),
+                (2050, lp.projected_2050),
+                (2070, lp.projected_2070),
+            ]:
+                area_rows.append({"Area": a.name, "Zone": a.zone, "Year": year, "Price (₹/sqft)": price})
+
+        if area_rows:
+            area_df = pd.DataFrame(area_rows)
+            fig = px.line(
+                area_df, x="Year", y="Price (₹/sqft)", color="Area",
+                markers=True, title="Chennai Area Price Timeline (₹/sqft)",
+                line_dash="Zone",
+            )
+            fig.update_layout(hovermode="x unified")
+            st.plotly_chart(fig, width="stretch")
+
+            # Growth table for areas
+            agrowth = []
+            for a in chennai_areas_all:
+                if a.name not in selected_areas:
+                    continue
+                lp = a.land_price
+                agrowth.append({
+                    "Area": a.name, "Zone": a.zone,
+                    "2015": f"₹{lp.price_per_sqft_2015:,}",
+                    "2025": f"₹{lp.price_per_sqft_2025:,}",
+                    "2050": f"₹{lp.projected_2050:,}",
+                    "2070": f"₹{lp.projected_2070:,}",
+                    "CAGR %": f"{lp.cagr_2015_2025:.1f}",
+                    "25yr Growth": f"{lp.projected_2050 / lp.price_per_sqft_2025:.1f}x",
+                })
+            st.dataframe(pd.DataFrame(agrowth), width="stretch", hide_index=True)
+        else:
+            st.info("Select at least one area.")
+
+    # ── Tab 3: Outskirts high-growth areas ──
+    with tab3:
+        st.markdown(
+            "**Outskirts and emerging areas** typically show the highest CAGR "
+            "due to lower base prices and rapid infrastructure development."
+        )
+        outskirts = [a for a in areas if a.city == "Chennai" and a.zone == "Outskirts"]
+        if not outskirts:
+            st.warning("No outskirts data available.")
+        else:
+            out_rows = []
+            for a in outskirts:
+                lp = a.land_price
+                for year, price in [
+                    (2015, lp.price_per_sqft_2015),
+                    (2020, lp.price_per_sqft_2020),
+                    (2025, lp.price_per_sqft_2025),
+                    (2030, lp.projected_2030),
+                    (2040, lp.projected_2040),
+                    (2050, lp.projected_2050),
+                    (2070, lp.projected_2070),
+                ]:
+                    out_rows.append({"Area": a.name, "Year": year, "Price (₹/sqft)": price})
+
+            out_df = pd.DataFrame(out_rows)
+            fig = px.line(
+                out_df, x="Year", y="Price (₹/sqft)", color="Area",
+                markers=True, title="Outskirts Price Timeline — Highest Growth Potential",
+            )
+            fig.update_layout(hovermode="x unified")
+            st.plotly_chart(fig, width="stretch")
+
+            # Summary metrics
+            cols = st.columns(len(outskirts))
+            for col, a in zip(cols, outskirts):
+                lp = a.land_price
+                growth = lp.projected_2050 / lp.price_per_sqft_2025
+                col.metric(
+                    a.name,
+                    f"₹{lp.price_per_sqft_2025:,}/sqft",
+                    f"{lp.cagr_2015_2025:.1f}% CAGR · {growth:.0f}x by 2050",
+                )

@@ -19,15 +19,12 @@ from typing import Optional
 
 
 def _get_ssl_context():
-    """Create an SSL context; falls back to unverified if certs unavailable."""
+    """Create an SSL context using certifi CA bundle for macOS compatibility."""
     try:
-        ctx = ssl.create_default_context()
-        # Quick test to see if default certs work
-        urllib.request.urlopen("https://api.open-meteo.com", timeout=5, context=ctx)
-        return ctx
-    except Exception:
-        ctx = ssl._create_unverified_context()
-        return ctx
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        return ssl.create_default_context()
 
 
 # --- Open-Meteo: Free, no API key ---

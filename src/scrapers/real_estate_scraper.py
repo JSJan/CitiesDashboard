@@ -83,11 +83,12 @@ CITY_SLUGS = {
 
 
 def _get_ssl_context():
-    """Create SSL context with fallback for macOS cert issues."""
+    """Create SSL context using certifi CA bundle for macOS compatibility."""
     try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
         return ssl.create_default_context()
-    except Exception:
-        return ssl._create_unverified_context()
 
 
 def _fetch_page(url: str, timeout: int = 15) -> Optional[str]:

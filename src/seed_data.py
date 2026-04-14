@@ -807,6 +807,122 @@ def get_all_cities():
                 green_cover_pct=8.0,
             ),
         ),
+
+        # ── Union Territories & Additional Cities ──
+
+        # Pondicherry (Puducherry) — coastal UT, French Quarter, tourism-driven
+        CityProfile(
+            name="Pondicherry", state="Puducherry", tier=3,
+            geo=GeographicalProfile(
+                latitude=11.934, longitude=79.830, elevation_m=4,
+                coastal=True, river_proximity=False, seismic_zone=2,
+                flood_risk="medium", terrain_type="coastal",
+            ),
+            climate=ClimateData(
+                avg_temp_c=28.5, avg_rainfall_mm=1280, humidity_pct=72,
+                air_quality_index=45, extreme_heat_days=15,
+                cyclone_risk="medium",
+                projected_temp_rise_2050=1.6, projected_temp_rise_2070=2.5,
+                projected_rainfall_change_2050_pct=5.0,
+                projected_rainfall_change_2070_pct=8.0,
+                projected_aqi_2050=60, projected_aqi_2070=75,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=2500, avg_price_per_sqft_2020=3800,
+                avg_price_per_sqft_2025=5500, cagr_2015_2025=8.2,
+                projected_price_2030=8200, projected_price_2040=16000,
+                projected_price_2050=30000, projected_price_2070=65000,
+            ),
+            population=PopulationData(
+                population_2011=244377, population_2020=310000,
+                population_2025=350000, growth_rate_pct=1.5,
+                projected_2030=380000, projected_2040=430000,
+                projected_2050=480000, projected_2070=550000,
+                density_per_sqkm=3400,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=6.5, education_score=7.0,
+                transport_score=4.5, water_supply_score=5.5,
+                green_cover_pct=22.0,
+            ),
+        ),
+
+        # Goa (Panaji) — coastal state, tourism + IT emerging
+        CityProfile(
+            name="Panaji", state="Goa", tier=3,
+            geo=GeographicalProfile(
+                latitude=15.498, longitude=73.827, elevation_m=7,
+                coastal=True, river_proximity=True, seismic_zone=3,
+                flood_risk="medium", terrain_type="coastal",
+            ),
+            climate=ClimateData(
+                avg_temp_c=27.5, avg_rainfall_mm=2932, humidity_pct=75,
+                air_quality_index=38, extreme_heat_days=8,
+                cyclone_risk="low",
+                projected_temp_rise_2050=1.4, projected_temp_rise_2070=2.2,
+                projected_rainfall_change_2050_pct=6.0,
+                projected_rainfall_change_2070_pct=10.0,
+                projected_aqi_2050=52, projected_aqi_2070=65,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=4000, avg_price_per_sqft_2020=6500,
+                avg_price_per_sqft_2025=9500, cagr_2015_2025=9.0,
+                projected_price_2030=14500, projected_price_2040=28000,
+                projected_price_2050=52000, projected_price_2070=110000,
+            ),
+            population=PopulationData(
+                population_2011=114405, population_2020=130000,
+                population_2025=145000, growth_rate_pct=1.2,
+                projected_2030=155000, projected_2040=170000,
+                projected_2050=185000, projected_2070=200000,
+                density_per_sqkm=2800,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=True, it_hub=False,
+                healthcare_score=6.0, education_score=5.5,
+                transport_score=5.0, water_supply_score=6.0,
+                green_cover_pct=35.0,
+            ),
+        ),
+
+        # Dehradun — hill capital of Uttarakhand, education hub
+        CityProfile(
+            name="Dehradun", state="Uttarakhand", tier=3,
+            geo=GeographicalProfile(
+                latitude=30.317, longitude=78.032, elevation_m=640,
+                coastal=False, river_proximity=True, seismic_zone=4,
+                flood_risk="medium", terrain_type="hilly",
+            ),
+            climate=ClimateData(
+                avg_temp_c=21.5, avg_rainfall_mm=2073, humidity_pct=62,
+                air_quality_index=72, extreme_heat_days=5,
+                cyclone_risk="none",
+                projected_temp_rise_2050=1.5, projected_temp_rise_2070=2.4,
+                projected_rainfall_change_2050_pct=-3.0,
+                projected_rainfall_change_2070_pct=-5.0,
+                projected_aqi_2050=90, projected_aqi_2070=110,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=2200, avg_price_per_sqft_2020=3500,
+                avg_price_per_sqft_2025=5000, cagr_2015_2025=8.6,
+                projected_price_2030=7500, projected_price_2040=15000,
+                projected_price_2050=28000, projected_price_2070=58000,
+            ),
+            population=PopulationData(
+                population_2011=578420, population_2020=720000,
+                population_2025=820000, growth_rate_pct=2.0,
+                projected_2030=920000, projected_2040=1100000,
+                projected_2050=1300000, projected_2070=1600000,
+                density_per_sqkm=3100,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=False, airport_international=False, it_hub=False,
+                healthcare_score=6.5, education_score=8.0,
+                transport_score=4.0, water_supply_score=7.0,
+                green_cover_pct=32.0,
+            ),
+        ),
     ]
 
     return cities

@@ -1,19 +1,19 @@
 {
-  "flood_r2": -0.3737,
-  "heat_r2": 0.4568,
-  "n_samples": 20,
-  "trained_at": "2026-04-14T18:19:22.507153",
+  "flood_r2": -0.22,
+  "heat_r2": -0.1385,
+  "n_samples": 23,
+  "trained_at": "2026-04-14T23:47:48.227126",
   "flood_feature_importance": {
-    "elevation_m": 0.3542,
-    "humidity_pct": 0.16,
-    "projected_rainfall_change_2050": 0.1571,
-    "green_cover_pct": 0.1477,
-    "density_per_sqkm": 0.1429,
-    "avg_rainfall_mm": 0.0381,
-    "coastal": 0.0,
+    "projected_rainfall_change_2050": 0.4792,
+    "density_per_sqkm": 0.2756,
+    "humidity_pct": 0.1119,
+    "green_cover_pct": 0.0685,
+    "elevation_m": 0.0553,
+    "terrain_type_num": 0.0064,
+    "seismic_zone": 0.0017,
+    "avg_rainfall_mm": 0.0014,
     "river_proximity": 0.0,
-    "seismic_zone": 0.0,
-    "cyclone_risk_num": 0.0,
-    "terrain_type_num": 0.0
+    "coastal": 0.0,
+    "cyclone_risk_num": 0.0
   }
 }

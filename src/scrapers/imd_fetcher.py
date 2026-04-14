@@ -27,9 +27,10 @@ CACHE_FILE = os.path.join(DATA_DIR, "weather_cache.json")
 
 def _get_ssl_context():
     try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
         return ssl.create_default_context()
-    except Exception:
-        return ssl._create_unverified_context()
 
 
 def _safe_get(url: str, timeout: int = 15) -> Optional[dict]:

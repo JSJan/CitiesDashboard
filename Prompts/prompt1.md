@@ -65,3 +65,38 @@ how is llm integration and user input provided
 Prompt 9 
 
 macOS Python lacks default certificates; unverified fallback ensures it "just works" (security tradeoff)
+Add LLM-powered query interface on top of existing scoring engine (1 week)
+Add data world wise
+More specific area wise within chennai, union territories like pondicherry
+
+
+Prompt 10
+Further area wise for chennai
+1. Ayanavaram
+2. Kolathur
+3. Saligramam
+4. Arumbakkam
+5. Gerukkambakkam
+6. Nolambur
+
+Outskirts of chennai
+Oragadam
+Guduvanchery
+Thirumazhisai
+Red Hills outskirts
+Chengalpattu side
+
+Dasboards to show the price increase of land over the years
+
+1BHK / small 2BHK (old flat)
+Price: ₹25L–₹50L
+Rent: ₹8K–₹18K/month
+
+----
+
+
+Prompt 11
+
+Based on the prompts provided
+Rate my skills on prompting
+How else can i efficiently make use of claude and use it to max capability
