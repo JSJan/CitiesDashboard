@@ -7,3 +7,11 @@ create a new problemstatement.md which had my original readme, requirement detai
 
 
 Prompt 3 
+
+Expand to all areas within the chennai city, area and zone wise
+Create downloadable csv in project assets folder, also document next step give a analysis on how optimal this calculation is, areas where ML models or LLM can be used
+
+Prompt 4
+From where do we get the seed data? How to replace with proper source of truth 
+- Integrate real-time data APIs (weather, AQI, real estate)
+- Interactive web dashboard with filters and visualizations

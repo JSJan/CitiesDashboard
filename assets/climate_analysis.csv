@@ -1,0 +1,20 @@
+City,State,Current Avg Temp (°C),Projected Temp 2050 (°C),Projected Temp 2070 (°C),Current AQI,Projected AQI 2050,Rainfall (mm),Rainfall Change 2050 (%),Extreme Heat Days,Flood Risk,Cyclone Risk,Climate Risk Score
+Mysuru,Karnataka,23.8,24.8,25.4,50,60,785,-1.5,2,low,none,17.8
+Coimbatore,Tamil Nadu,25.1,26.2,26.8,65,80,640,-2.0,5,low,none,20.5
+Bengaluru,Karnataka,24.0,25.3,26.0,95,125,970,-3.0,3,medium,none,28.0
+Pune,Maharashtra,25.0,26.2,26.8,90,115,722,-2.0,8,medium,none,29.0
+Indore,Madhya Pradesh,24.5,25.8,26.5,80,100,940,-2.0,18,low,none,29.0
+Thiruvananthapuram,Kerala,27.0,28.1,28.7,45,55,1827,6.0,2,medium,low,32.0
+Chandigarh,Chandigarh,23.5,24.9,25.6,105,130,1100,-2.0,15,low,none,33.5
+Kochi,Kerala,27.0,28.2,28.8,55,70,3005,8.0,2,high,low,40.0
+Vadodara,Gujarat,27.0,28.5,29.3,100,125,920,-3.0,22,medium,low,44.5
+Hyderabad,Telangana,26.7,28.2,28.9,105,135,812,-2.0,20,medium,low,48.0
+Visakhapatnam,Andhra Pradesh,27.5,28.9,29.6,75,95,1118,7.0,10,medium,high,49.5
+Bhubaneswar,Odisha,27.4,28.9,29.6,85,105,1502,5.0,15,medium,high,52.0
+Jaipur,Rajasthan,25.8,27.8,28.8,135,165,600,-6.0,40,low,none,54.0
+Lucknow,Uttar Pradesh,25.5,27.3,28.2,190,220,960,-3.0,28,medium,none,54.5
+Ahmedabad,Gujarat,27.0,28.8,29.8,145,170,782,-4.0,35,medium,low,59.5
+Mumbai,Maharashtra,27.2,28.8,29.6,155,175,2167,8.0,5,high,medium,59.5
+Delhi,Delhi,25.0,27.0,28.1,260,290,797,-5.0,30,medium,none,61.5
+Chennai,Tamil Nadu,28.6,30.1,30.9,110,140,1400,10.0,15,high,high,65.5
+Kolkata,West Bengal,26.8,28.4,29.3,170,200,1582,7.0,12,high,high,67.5

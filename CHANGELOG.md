@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.2.0] - 2026-04-14
+
+### Added
+- **Chennai Area-Level Analysis** — 30 areas across 6 zones (North, Central, South, West, IT Corridor/OMR, ECR Belt)
+  - `src/area_models.py` — `AreaProfile` and `AreaLandPrice` data models
+  - `src/chennai_areas_data.py` — seed data for 30 Chennai areas with zone classification
+  - `src/chennai_area_analysis.py` — area-level liveability and investment scoring, zone summaries, buy recommendations
+- **CSV Export Module** (`src/csv_export.py`)
+  - Exports 11 CSV files to `assets/` folder covering all city and area reports
+  - New CLI option: `python3 main.py --report export`
+- **Chennai Area Reports** — new CLI option: `python3 main.py --report chennai`
+  - Zone-wise summary with avg prices, CAGR, AQI, scores
+  - Area ranking (30 areas ranked by Overall = Liveability 40% + Investment 60%)
+  - Top 10 areas to buy land recommendations
+- **NextSteps.md** — optimization analysis document covering:
+  - Current calculation accuracy assessment
+  - Where ML models should be used (land price, climate, population, scoring)
+  - Where LLMs should be used (policy analysis, NL queries, report generation, data enrichment)
+  - Implementation roadmap (Phase 3A through 3D)
+
+### Fixed
+- `flood_risk` attribute references now correctly point to `city.geo.flood_risk` instead of `city.climate.flood_risk`
+
+---
+
 ## [0.1.0] - 2026-04-14
 
 ### Added

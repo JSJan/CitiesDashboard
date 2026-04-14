@@ -1,0 +1,31 @@
+Area,Zone,Type,Distance from Center (km),Metro,Railway,IT Park Nearby,Hospital Nearby,Coastal,Flood Prone,Green Cover (%),AQI,Water Supply (1-10),Density (/km²),Price 2015 (₹/sqft),Price 2020 (₹/sqft),Price 2025 (₹/sqft),CAGR 2015-25 (%),Projected 2030 (₹/sqft),Projected 2040 (₹/sqft),Projected 2050 (₹/sqft),Projected 2070 (₹/sqft)
+Tondiarpet,North,mixed,5,True,True,False,True,True,True,4.0,135,4.0,42000,3200,4500,6200,6.8,8500,14000,22000,42000
+Tiruvottiyur,North,industrial,14,False,True,False,True,True,True,3.0,155,3.5,28000,2200,3000,4200,6.7,5800,10000,16000,30000
+Ennore,North,industrial,18,False,True,False,False,True,True,2.0,170,3.0,12000,1500,2200,3200,7.9,4800,8500,14000,28000
+Madhavaram,North,residential,12,False,True,False,True,False,False,8.0,120,5.0,18000,2800,4000,5800,7.6,8200,14500,24000,46000
+Manali,North,industrial,16,False,True,False,False,False,True,2.0,185,3.0,9000,1800,2500,3500,6.9,4800,8000,13000,25000
+T. Nagar,Central,commercial,3,True,True,False,True,False,False,5.0,110,7.0,45000,10000,14000,18500,6.3,24000,38000,55000,95000
+Mylapore,Central,residential,4,True,True,False,True,True,False,8.0,95,7.5,35000,9000,12500,17000,6.6,22500,36000,52000,90000
+Anna Nagar,Central,residential,5,True,False,False,True,False,False,12.0,100,7.0,28000,8500,11500,15500,6.2,20500,33000,48000,82000
+Egmore,Central,mixed,2,True,True,False,True,False,False,6.0,115,6.5,38000,9500,13000,17500,6.3,23000,36000,52000,88000
+Nungambakkam,Central,commercial,3,True,True,False,True,False,False,7.0,105,7.5,32000,12000,16000,22000,6.2,28000,44000,62000,105000
+Adyar,South,residential,8,False,False,True,True,True,True,15.0,80,6.5,22000,8000,11000,15000,6.5,20000,32000,48000,82000
+Besant Nagar,South,residential,9,False,False,False,True,True,False,18.0,70,7.0,18000,9000,12500,17000,6.6,22000,35000,50000,85000
+Velachery,South,residential,12,True,True,True,True,False,True,6.0,105,5.0,30000,5500,7500,10500,6.7,14500,24000,36000,65000
+Tambaram,South,residential,22,False,True,False,True,False,True,10.0,90,5.5,14000,3000,4200,6000,7.2,8500,15000,25000,48000
+Medavakkam,South,residential,18,False,False,True,True,False,True,8.0,95,4.5,16000,3200,4500,6500,7.4,9200,16000,27000,52000
+Sholinganallur,South,it_corridor,20,False,False,True,True,True,True,7.0,85,5.0,12000,4000,6500,10000,9.6,15500,30000,52000,100000
+Porur,West,mixed,14,False,False,True,True,False,True,6.0,100,5.0,15000,3800,5500,8000,7.7,11500,20000,34000,62000
+Ambattur,West,industrial,13,False,True,True,True,False,False,5.0,120,5.5,20000,3500,5000,7200,7.5,10200,18000,30000,55000
+Avadi,West,residential,21,False,True,False,True,False,False,10.0,105,5.0,11000,2200,3200,4800,8.1,7000,13000,22000,44000
+Poonamallee,West,residential,24,False,True,False,False,False,False,14.0,90,5.5,8000,2000,3000,4500,8.4,6800,13000,23000,46000
+Mogappair,West,residential,11,False,False,True,True,False,False,10.0,95,6.0,22000,4500,6200,8800,6.9,12000,20000,32000,58000
+Perungudi,IT Corridor (OMR),it_corridor,14,False,False,True,True,False,True,5.0,90,5.0,14000,4200,6500,9800,8.8,15000,28000,48000,95000
+Thoraipakkam,IT Corridor (OMR),it_corridor,16,False,False,True,True,False,True,4.0,88,4.5,12000,3800,6000,9200,9.2,14500,28000,48000,95000
+Siruseri,IT Corridor (OMR),it_corridor,25,False,False,True,False,True,False,12.0,65,4.0,5000,2200,3800,6200,10.9,10500,22000,42000,90000
+Navalur,IT Corridor (OMR),it_corridor,28,False,False,True,False,True,False,15.0,60,4.0,3500,1800,3200,5500,11.8,9500,22000,45000,100000
+Kelambakkam,IT Corridor (OMR),it_corridor,30,False,False,True,False,True,False,18.0,55,3.5,2800,1500,2800,5000,12.8,9000,21000,44000,100000
+Thiruvanmiyur,ECR Belt,residential,10,False,True,True,True,True,False,10.0,75,6.0,20000,7000,9500,13000,6.4,17500,28000,42000,75000
+Palavakkam,ECR Belt,residential,13,False,False,True,True,True,False,12.0,65,5.5,15000,5500,7500,10500,6.7,14500,24000,38000,68000
+Neelankarai,ECR Belt,residential,16,False,False,True,False,True,False,16.0,55,5.0,8000,4500,6500,9500,7.8,13500,24000,40000,72000
+Kovalam,ECR Belt,residential,28,False,False,False,False,True,False,25.0,45,4.0,3000,1800,3000,5200,11.2,9000,20000,40000,85000

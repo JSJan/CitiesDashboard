@@ -129,7 +129,7 @@ def generate_climate_report(cities: List[CityProfile]) -> pd.DataFrame:
             "Rainfall (mm)": city.climate.avg_rainfall_mm,
             "Rainfall Change 2050 (%)": city.climate.projected_rainfall_change_2050_pct,
             "Extreme Heat Days": city.climate.extreme_heat_days,
-            "Flood Risk": city.climate.flood_risk,
+            "Flood Risk": city.geo.flood_risk,
             "Cyclone Risk": city.climate.cyclone_risk,
             "Climate Risk Score": risk,
         })

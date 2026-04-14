@@ -34,6 +34,13 @@ from src.scoring_engine import (
     get_top_cities_to_buy,
     compute_all_scores,
 )
+from src.chennai_areas_data import get_chennai_areas
+from src.chennai_area_analysis import (
+    generate_area_ranking,
+    generate_zone_summary,
+    get_top_areas_to_buy,
+)
+from src.csv_export import export_all
 
 
 def print_section(title: str, df: pd.DataFrame):
@@ -104,6 +111,28 @@ def run_buy_recommendations(cities):
     print("  - Buy: Good fundamentals with moderate risk")
     print("  - Hold: Decent but watch for risks")
     print("  - Avoid: High risk or poor growth outlook")
+
+
+def run_chennai_areas(areas):
+    """Run Chennai area and zone-level analysis."""
+    df_zone = generate_zone_summary(areas)
+    print_section("CHENNAI ZONE-WISE SUMMARY", df_zone)
+
+    df_rank = generate_area_ranking(areas)
+    print_section("CHENNAI AREA RANKING (30 Areas across 6 Zones)", df_rank)
+    print("  Scoring: Overall = Liveability (40%) + Investment (60%)")
+
+    df_buy = get_top_areas_to_buy(areas, top_n=10)
+    print_section("TOP 10 AREAS TO BUY LAND IN CHENNAI TODAY", df_buy)
+    print("  Buy Score = Investment (50%) + Liveability (20%) + ROI Potential (30%)")
+
+
+def run_csv_export():
+    """Export all reports as CSV files to assets/ folder."""
+    print("\n" + "=" * 100)
+    print("  EXPORTING ALL REPORTS TO CSV")
+    print("=" * 100)
+    export_all()
 
 
 def run_city_deep_dive(cities, city_name: str):
@@ -178,7 +207,8 @@ def main():
     )
     parser.add_argument(
         "--report",
-        choices=["climate", "land", "population", "ranking", "buy", "all"],
+        choices=["climate", "land", "population", "ranking", "buy",
+                 "chennai", "export", "all"],
         default="all",
         help="Type of report to generate",
     )
@@ -190,6 +220,7 @@ def main():
 
     args = parser.parse_args()
     cities = get_all_cities()
+    areas = get_chennai_areas()
 
     print("\n" + "╔" + "═" * 98 + "╗")
     print("║" + "  INDIA CITIES DASHBOARD".center(98) + "║")
@@ -215,6 +246,12 @@ def main():
 
     if args.report in ("all", "buy"):
         run_buy_recommendations(cities)
+
+    if args.report in ("all", "chennai"):
+        run_chennai_areas(areas)
+
+    if args.report in ("all", "export"):
+        run_csv_export()
 
     if args.report == "all":
         print("\n" + "=" * 100)

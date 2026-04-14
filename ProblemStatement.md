@@ -87,6 +87,15 @@ Create a project that provides weather climate change prediction for cities in I
 - Global city comparison
 - Agriculture land analysis with trusted party maintenance model
 
-### Phase 3
-- Expand to all areas within the cities
-- Create downloadable csv in project assets folder
+### Phase 3 (Current)
+- Expand to all areas within Chennai — 30 areas across 6 zones (North, Central, South, West, IT Corridor/OMR, ECR Belt)
+- Zone-wise and area-wise liveability and investment scoring
+- Downloadable CSV exports for all reports in `assets/` folder
+- Analysis of calculation optimality and ML/LLM opportunities (`NextSteps.md`)
+
+### Phase 4 (Future)
+- Replace CAGR with ML time-series models (Prophet, XGBoost)
+- Integrate real-time APIs (CPCB AQI, IMD weather, real estate listings)
+- LLM-powered natural language query interface
+- Expand area-level analysis to Bengaluru, Hyderabad, Pune
+- Automated news sentiment pipeline for price predictions

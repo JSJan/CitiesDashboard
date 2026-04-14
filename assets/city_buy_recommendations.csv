@@ -1,0 +1,20 @@
+Rank,City,State,Current Price (₹/sqft),Projected 2050 (₹/sqft),ROI 2050 (%),Investment Score,Sustainability,Buy Score,Recommendation
+1,Mysuru,Karnataka,3500,25000,614.3,53.5,72.6,61.6,Buy
+2,Coimbatore,Tamil Nadu,4800,28000,483.3,64.8,68.0,60.8,Buy
+3,Bhubaneswar,Odisha,3800,30000,689.5,49.5,67.1,60.6,Buy
+4,Indore,Madhya Pradesh,4200,28000,566.7,55.2,61.6,57.6,Buy
+5,Visakhapatnam,Andhra Pradesh,5000,30000,500.0,53.8,64.0,55.7,Buy
+6,Vadodara,Gujarat,3800,27000,610.5,43.8,57.4,53.1,Buy
+7,Bengaluru,Karnataka,11000,52000,372.7,59.0,53.8,50.9,Buy
+8,Kochi,Kerala,6500,24000,269.2,48.0,75.0,49.8,Hold
+9,Hyderabad,Telangana,9000,50000,455.6,54.5,47.4,49.7,Hold
+10,Thiruvananthapuram,Kerala,5800,23000,296.6,42.8,77.0,49.1,Hold
+11,Pune,Maharashtra,8500,35000,311.8,54.2,59.2,48.8,Hold
+12,Lucknow,Uttar Pradesh,4500,27000,500.0,43.8,52.8,48.4,Hold
+13,Chandigarh,Chandigarh,10000,35000,250.0,38.8,73.3,45.0,Hold
+14,Ahmedabad,Gujarat,5800,26000,348.3,38.5,47.5,40.1,Hold
+15,Jaipur,Rajasthan,5000,24000,380.0,38.0,37.6,37.9,Hold
+16,Chennai,Tamil Nadu,9500,40000,321.1,38.2,42.4,37.6,Hold
+17,Mumbai,Maharashtra,25000,80000,220.0,35.8,54.6,37.3,Hold
+18,Kolkata,West Bengal,6500,22000,238.5,33.2,50.4,35.6,Hold
+19,Delhi,Delhi,20000,68000,240.0,36.0,41.3,34.0,Avoid
