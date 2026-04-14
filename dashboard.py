@@ -17,8 +17,8 @@ import plotly.graph_objects as go
 from src.seed_data import get_all_cities
 from src.chennai_areas_data import get_chennai_areas
 from src.climate_analysis import generate_climate_report, climate_risk_score
-from src.land_price_analysis import generate_land_report, generate_price_timeline
-from src.population_analysis import generate_population_report, generate_population_timeline
+from src.land_price_analysis import generate_land_report, generate_price_timeline, monte_carlo_price_simulation
+from src.population_analysis import generate_population_report, generate_population_timeline, estimate_carrying_capacity
 from src.scoring_engine import generate_master_ranking, get_top_cities_to_buy, compute_all_scores
 from src.chennai_area_analysis import generate_area_ranking, generate_zone_summary, get_top_areas_to_buy
 
@@ -79,6 +79,27 @@ state_filter = st.sidebar.multiselect(
 )
 filtered_cities = [c for c in filtered_cities if c.state in state_filter]
 
+# Price range filter
+all_prices = [c.land_price.avg_price_per_sqft_2025 for c in cities]
+price_min, price_max = int(min(all_prices)), int(max(all_prices))
+price_range = st.sidebar.slider(
+    "Price Range (₹/sqft)", price_min, price_max, (price_min, price_max), step=500
+)
+filtered_cities = [
+    c for c in filtered_cities
+    if price_range[0] <= c.land_price.avg_price_per_sqft_2025 <= price_range[1]
+]
+
+# Minimum overall score filter
+min_score = st.sidebar.slider("Min Overall Score", 0, 100, 0, step=5)
+
+# Apply min score filter (only for pages that use scored cities)
+if min_score > 0:
+    filtered_cities = [
+        c for c in filtered_cities
+        if hasattr(c, 'overall_score') and (c.overall_score or 0) >= min_score
+    ]
+
 st.sidebar.markdown("---")
 st.sidebar.caption(
     "Data: Census 2011, IMD, IPCC AR6, NAREDCO estimates. "
@@ -111,7 +132,7 @@ if page == "Master Ranking":
     st.dataframe(
         df.style.background_gradient(subset=["Overall Score"], cmap="RdYlGn")
               .background_gradient(subset=["Climate Risk"], cmap="RdYlGn_r"),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 
@@ -122,7 +143,7 @@ if page == "Master Ranking":
         color_discrete_sequence=["#2ecc71", "#3498db", "#e74c3c"],
     )
     fig.update_layout(yaxis_title="Score (0-100)", xaxis_tickangle=-45)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 elif page == "City Comparison":
@@ -161,7 +182,7 @@ elif page == "City Comparison":
             polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
             title="City Comparison Radar",
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
         # Side-by-side metrics
         cols = st.columns(len(sel_cities))
@@ -182,7 +203,7 @@ elif page == "Climate Analysis":
     df = generate_climate_report(filtered_cities)
     st.dataframe(
         df.style.background_gradient(subset=["Climate Risk Score"], cmap="RdYlGn_r"),
-        use_container_width=True, hide_index=True,
+        width="stretch", hide_index=True,
     )
 
     # Temperature projection chart
@@ -201,7 +222,7 @@ elif page == "Climate Analysis":
         title="Temperature Projection by City",
         xaxis_title="Year", yaxis_title="Avg Temperature (°C)",
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     # AQI comparison
     aqi_data = pd.DataFrame([{
@@ -215,7 +236,7 @@ elif page == "Climate Analysis":
         barmode="group", title="Air Quality Index Trajectory",
         color_discrete_sequence=["#27ae60", "#f39c12", "#e74c3c"],
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 elif page == "Land Price Analysis":
@@ -224,7 +245,7 @@ elif page == "Land Price Analysis":
     df = generate_land_report(filtered_cities)
     st.dataframe(
         df.style.background_gradient(subset=["Investment Score"], cmap="RdYlGn"),
-        use_container_width=True, hide_index=True,
+        width="stretch", hide_index=True,
     )
 
     # Price timeline chart
@@ -239,19 +260,57 @@ elif page == "Land Price Analysis":
     )
     fig.add_vline(x=2025, line_dash="dash", line_color="gray",
                   annotation_text="Today")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     # Buy recommendations
     st.subheader("Top Cities to Buy Land Today")
     buy_df = get_top_cities_to_buy(filtered_cities, top_n=10)
-    st.dataframe(buy_df, use_container_width=True, hide_index=True)
+    st.dataframe(buy_df, width="stretch", hide_index=True)
+
+    # Monte Carlo uncertainty bands
+    st.subheader("Price Uncertainty — Monte Carlo Simulation")
+    mc_city_name = st.selectbox(
+        "Select city for uncertainty analysis",
+        [c.name for c in filtered_cities],
+        key="mc_city",
+    )
+    mc_city = next(c for c in filtered_cities if c.name == mc_city_name)
+    mc_df = monte_carlo_price_simulation(mc_city)
+
+    fig_mc = go.Figure()
+    # P10-P90 band (light)
+    fig_mc.add_trace(go.Scatter(
+        x=list(mc_df["Year"]) + list(mc_df["Year"][::-1]),
+        y=list(mc_df["P90"]) + list(mc_df["P10"][::-1]),
+        fill="toself", fillcolor="rgba(46,204,113,0.1)",
+        line=dict(color="rgba(0,0,0,0)"), name="P10–P90 range",
+    ))
+    # P25-P75 band (darker)
+    fig_mc.add_trace(go.Scatter(
+        x=list(mc_df["Year"]) + list(mc_df["Year"][::-1]),
+        y=list(mc_df["P75"]) + list(mc_df["P25"][::-1]),
+        fill="toself", fillcolor="rgba(46,204,113,0.25)",
+        line=dict(color="rgba(0,0,0,0)"), name="P25–P75 range",
+    ))
+    # Median line
+    fig_mc.add_trace(go.Scatter(
+        x=mc_df["Year"], y=mc_df["P50"],
+        mode="lines", name="Median (P50)",
+        line=dict(color="#2ecc71", width=3),
+    ))
+    fig_mc.update_layout(
+        title=f"Land Price Uncertainty — {mc_city_name} (1,000 simulations)",
+        xaxis_title="Year", yaxis_title="Price (₹/sqft)",
+    )
+    st.plotly_chart(fig_mc, width="stretch")
+    st.caption("Bands show 10th–90th and 25th–75th percentile ranges from Monte Carlo simulation varying annual CAGR.")
 
 
 elif page == "Population Analysis":
     st.header("Population Analysis & Projections")
 
     df = generate_population_report(filtered_cities)
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    st.dataframe(df, width="stretch", hide_index=True)
 
     # Population timeline
     timelines = []
@@ -261,11 +320,20 @@ elif page == "Population Analysis":
 
     fig = px.line(
         all_timelines, x="Year", y="Population", color="City",
-        title="Population Projection — 2011 to 2070",
+        title="Population Projection — 2011 to 2070 (dashed lines = carrying capacity)",
     )
     fig.add_vline(x=2025, line_dash="dash", line_color="gray",
                   annotation_text="Today")
-    st.plotly_chart(fig, use_container_width=True)
+    # Add carrying capacity lines for each city
+    for city in filtered_cities:
+        cap = estimate_carrying_capacity(city)
+        fig.add_hline(
+            y=cap, line_dash="dot", line_color="rgba(150,150,150,0.4)",
+            annotation_text=f"{city.name} cap",
+            annotation_font_size=9,
+            annotation_font_color="gray",
+        )
+    st.plotly_chart(fig, width="stretch")
 
     # Growth rate comparison
     growth_data = pd.DataFrame([{
@@ -279,7 +347,7 @@ elif page == "Population Analysis":
         color_continuous_scale="RdYlGn",
     )
     fig.update_traces(textposition="top center")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 elif page == "Chennai Areas":
@@ -289,7 +357,7 @@ elif page == "Chennai Areas":
 
     with tab1:
         zone_df = generate_zone_summary(areas)
-        st.dataframe(zone_df, use_container_width=True, hide_index=True)
+        st.dataframe(zone_df, width="stretch", hide_index=True)
 
         # Zone price comparison
         fig = px.bar(
@@ -297,7 +365,7 @@ elif page == "Chennai Areas":
             barmode="group", title="Zone-wise Scores",
             color_discrete_sequence=["#2ecc71", "#e74c3c"],
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with tab2:
         # Zone filter for areas
@@ -308,7 +376,7 @@ elif page == "Chennai Areas":
         rank_df = generate_area_ranking(filtered_areas)
         st.dataframe(
             rank_df.style.background_gradient(subset=["Overall"], cmap="RdYlGn"),
-            use_container_width=True, hide_index=True,
+            width="stretch", hide_index=True,
         )
 
         # Price scatter
@@ -325,11 +393,11 @@ elif page == "Chennai Areas":
             size="CAGR %",
         )
         fig.update_traces(textposition="top center")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with tab3:
         buy_df = get_top_areas_to_buy(areas, top_n=15)
-        st.dataframe(buy_df, use_container_width=True, hide_index=True)
+        st.dataframe(buy_df, width="stretch", hide_index=True)
 
 
 elif page == "Investment Calculator":
@@ -407,7 +475,7 @@ elif page == "Investment Calculator":
         title=f"Investment Value Over Time — {loc_name} ({investment_sqft} sqft)",
         xaxis_title="Year", yaxis_title="Portfolio Value (₹)",
     )
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     st.info(
         "**Disclaimer:** Projections are based on historical CAGR trends and are estimates only. "

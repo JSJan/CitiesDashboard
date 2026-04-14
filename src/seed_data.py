@@ -768,6 +768,45 @@ def get_all_cities():
                 green_cover_pct=18.0,
             ),
         ),
+
+        CityProfile(
+            name="Surat",
+            state="Gujarat",
+            tier=2,
+            geo=GeographicalProfile(
+                latitude=21.170, longitude=72.831, elevation_m=13,
+                coastal=True, river_proximity=True, seismic_zone=3,
+                flood_risk="high", terrain_type="plain",
+            ),
+            climate=ClimateData(
+                avg_temp_c=27.3, avg_rainfall_mm=1143, humidity_pct=68,
+                air_quality_index=95, extreme_heat_days=18,
+                cyclone_risk="medium",
+                projected_temp_rise_2050=1.5, projected_temp_rise_2070=2.3,
+                projected_rainfall_change_2050_pct=6.0,
+                projected_rainfall_change_2070_pct=10.0,
+                projected_aqi_2050=120, projected_aqi_2070=145,
+            ),
+            land_price=LandPriceData(
+                avg_price_per_sqft_2015=1800, avg_price_per_sqft_2020=2800,
+                avg_price_per_sqft_2025=4500, cagr_2015_2025=9.6,
+                projected_price_2030=7200, projected_price_2040=16000,
+                projected_price_2050=35000, projected_price_2070=85000,
+            ),
+            population=PopulationData(
+                population_2011=4467000, population_2020=5800000,
+                population_2025=6700000, growth_rate_pct=3.2,
+                projected_2030=7800000, projected_2040=9500000,
+                projected_2050=11000000, projected_2070=13500000,
+                density_per_sqkm=5600,
+            ),
+            infrastructure=InfrastructureScore(
+                metro_rail=True, airport_international=True, it_hub=False,
+                healthcare_score=6.0, education_score=5.5,
+                transport_score=6.5, water_supply_score=5.0,
+                green_cover_pct=8.0,
+            ),
+        ),
     ]
 
     return cities

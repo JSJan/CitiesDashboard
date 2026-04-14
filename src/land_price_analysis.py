@@ -168,3 +168,49 @@ def generate_land_report(cities: List[CityProfile]) -> pd.DataFrame:
     df = pd.DataFrame(rows)
     df = df.sort_values("Investment Score", ascending=False)
     return df
+
+
+def monte_carlo_price_simulation(city: CityProfile, n_simulations: int = 1000,
+                                 seed: int = 42) -> pd.DataFrame:
+    """
+    Run Monte Carlo simulation for land price projection with uncertainty bands.
+
+    Varies CAGR using a normal distribution centered on historical CAGR
+    with standard deviation proportional to tier volatility.
+
+    Returns DataFrame with Year, P10, P25, P50 (median), P75, P90, Mean columns.
+    """
+    rng = np.random.default_rng(seed)
+    base_cagr = city.land_price.cagr_2015_2025
+    base_price = city.land_price.avg_price_per_sqft_2025
+
+    # Higher-tier cities have lower volatility
+    volatility = {1: 0.20, 2: 0.30, 3: 0.40}
+    cagr_std = base_cagr * volatility.get(city.tier, 0.25)
+
+    years = list(range(2025, 2071))
+    # Each simulation: sample a CAGR per year (random walk on growth rate)
+    all_paths = np.zeros((n_simulations, len(years)))
+    all_paths[:, 0] = base_price
+
+    for sim in range(n_simulations):
+        price = base_price
+        for i, year in enumerate(years[1:], 1):
+            # Annual CAGR varies around base with mean-reversion
+            annual_cagr = rng.normal(base_cagr, cagr_std)
+            annual_cagr = max(0, annual_cagr)  # price can't have negative growth below 0
+            price = price * (1 + annual_cagr / 100)
+            all_paths[sim, i] = price
+
+    # Compute percentiles across simulations
+    results = pd.DataFrame({
+        "Year": years,
+        "P10": np.percentile(all_paths, 10, axis=0).astype(int),
+        "P25": np.percentile(all_paths, 25, axis=0).astype(int),
+        "P50": np.percentile(all_paths, 50, axis=0).astype(int),
+        "P75": np.percentile(all_paths, 75, axis=0).astype(int),
+        "P90": np.percentile(all_paths, 90, axis=0).astype(int),
+        "Mean": np.mean(all_paths, axis=0).astype(int),
+        "City": city.name,
+    })
+    return results
