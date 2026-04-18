@@ -42,6 +42,7 @@ pip3 install -r requirements.txt
 ```
 
 This installs:
+
 | Package | Purpose |
 |---------|---------|
 | pandas | Data manipulation and report generation |
@@ -57,11 +58,13 @@ This installs:
 ## Step 4: Run the Dashboard
 
 ### Full Dashboard (All Reports)
+
 ```bash
 python3 main.py
 ```
 
 ### Individual Reports
+
 ```bash
 python3 main.py --report climate      # Climate change analysis
 python3 main.py --report land         # Land price analysis & ROI
@@ -71,6 +74,7 @@ python3 main.py --report buy          # Top cities to buy land
 ```
 
 ### City Deep Dive
+
 ```bash
 python3 main.py --city Chennai
 python3 main.py --city Bengaluru
@@ -80,10 +84,12 @@ python3 main.py --city Mysuru
 Available cities: Mumbai, Delhi, Bengaluru, Chennai, Hyderabad, Kolkata, Pune, Ahmedabad, Coimbatore, Jaipur, Lucknow, Chandigarh, Kochi, Indore, Thiruvananthapuram, Visakhapatnam, Mysuru, Vadodara, Bhubaneswar
 
 ### Live API Data
+
 ```bash
 python3 main.py --report climate --live    # Fetch real-time weather data before report
 python3 main.py --report all --live         # All reports with live data
 ```
+
 Requires internet connection. Optionally set `OWM_API_KEY` environment variable for AQI data from OpenWeatherMap.
 
 ---
@@ -96,7 +102,7 @@ The interactive web dashboard provides charts, filters, and an investment calcul
 streamlit run dashboard.py
 ```
 
-This opens the dashboard at **http://localhost:8501** with 7 pages:
+This opens the dashboard at **<http://localhost:8501>** with 7 pages:
 
 | Page | Description |
 |------|-------------|
@@ -151,16 +157,21 @@ CitiesDashboard/
 ## Troubleshooting
 
 ### `pip: command not found`
+
 Use `pip3` instead of `pip` on macOS.
 
 ### `ModuleNotFoundError: No module named 'src'`
+
 Make sure you are running from the project root directory (`CitiesDashboard/`), not from inside `src/`.
 
 ### `python: command not found`
+
 Use `python3` on macOS/Linux. On Windows, ensure Python is added to your PATH.
 
 ### Tables look misaligned in terminal
+
 Use a monospace font and ensure your terminal width is at least 120 characters. You can resize or use:
+
 ```bash
 python3 main.py --report ranking 2>&1 | less -S
 ```
@@ -170,6 +181,10 @@ python3 main.py --report ranking 2>&1 | less -S
 ## Deactivate Virtual Environment
 
 When done:
+
 ```bash
 deactivate
 ```
+
+
+streamlit run dashboard.py

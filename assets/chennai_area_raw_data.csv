@@ -29,3 +29,25 @@ Thiruvanmiyur,ECR Belt,residential,10,False,True,True,True,True,False,10.0,75,6.
 Palavakkam,ECR Belt,residential,13,False,False,True,True,True,False,12.0,65,5.5,15000,5500,7500,10500,6.7,14500,24000,38000,68000
 Neelankarai,ECR Belt,residential,16,False,False,True,False,True,False,16.0,55,5.0,8000,4500,6500,9500,7.8,13500,24000,40000,72000
 Kovalam,ECR Belt,residential,28,False,False,False,False,True,False,25.0,45,4.0,3000,1800,3000,5200,11.2,9000,20000,40000,85000
+Guindy,Central,mixed,8,True,True,True,True,False,False,18.0,72,7.0,14000,6500,8500,11000,5.4,14000,22000,33000,55000
+Chromepet,South,residential,18,True,True,False,True,False,True,10.0,80,5.5,18000,3200,4200,5800,6.1,8000,14000,25000,50000
+Pallavaram,South,mixed,20,True,True,False,True,False,True,8.0,85,5.0,15000,2800,3800,5200,6.4,7500,13000,23000,45000
+Perambur,North,residential,6,False,True,False,True,False,True,8.0,90,5.5,22000,4000,5200,6800,5.4,9000,14000,22000,42000
+Thiruverkadu,West,residential,16,False,False,False,False,False,False,15.0,70,4.5,8000,1500,2400,3800,9.7,6000,13000,28000,65000
+Pallikaranai,South,mixed,17,False,False,True,True,False,True,12.0,68,5.0,12000,2800,4200,6200,8.3,9000,17000,32000,68000
+Ayanavaram,North,residential,5,True,True,False,True,False,True,8.0,88,6.0,25000,4500,5800,7500,5.2,9500,15000,24000,45000
+Kolathur,North,residential,10,True,False,False,True,False,True,7.0,82,5.5,18000,3000,4200,6000,7.2,8500,15000,27000,55000
+Saligramam,West,mixed,8,True,True,True,True,False,False,10.0,75,7.0,20000,6000,8000,10500,5.8,13500,21000,32000,58000
+Arumbakkam,Central,residential,7,True,False,True,True,False,False,9.0,78,6.5,22000,5500,7200,9500,5.6,12000,19000,30000,55000
+Gerukambakkam,West,residential,15,False,False,True,False,False,False,18.0,62,4.5,6000,1800,2800,4200,8.8,6500,13000,26000,62000
+Nolambur,West,residential,12,False,False,True,True,False,False,12.0,68,5.5,10000,3200,4500,6500,7.3,9000,16000,28000,58000
+Oragadam,Outskirts,industrial,45,False,False,True,False,False,False,25.0,50,4.0,1500,600,1200,2200,13.9,4000,10000,25000,70000
+Guduvanchery,Outskirts,residential,35,False,True,False,True,False,False,20.0,55,4.5,3000,800,1600,2800,13.3,5000,12000,28000,72000
+Thirumazhisai,Outskirts,residential,25,False,False,False,False,False,False,22.0,52,4.0,2500,700,1400,2500,13.6,4500,11000,26000,68000
+Red Hills,Outskirts,residential,22,False,True,False,False,False,True,20.0,58,5.0,4000,900,1500,2600,11.2,4200,10000,22000,55000
+Chengalpattu,Outskirts,mixed,55,False,True,False,True,False,False,28.0,48,5.0,2000,500,1000,1800,13.7,3200,8500,22000,65000
+White Town,Central,mixed,0,False,True,False,True,True,False,25.0,35,6.5,5000,4500,7000,10000,8.3,14500,27000,48000,95000
+Auroville,West,residential,10,False,False,False,False,False,False,55.0,28,5.0,500,1200,2000,3200,10.3,5200,12000,25000,60000
+Lawspet,North,residential,4,False,False,False,True,False,True,18.0,42,5.5,8000,2000,3000,4500,8.4,6500,12000,22000,48000
+ECR Pondicherry,South,residential,6,False,False,False,False,True,False,30.0,32,4.5,3500,1800,2800,4200,8.8,6500,13000,26000,58000
+Mudaliarpet,Central,commercial,2,False,True,False,True,False,True,12.0,48,5.5,12000,3000,4500,6500,8.0,9500,18000,33000,70000

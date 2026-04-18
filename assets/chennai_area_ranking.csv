@@ -1,31 +1,53 @@
 Rank,Area,Zone,Type,Liveability,Investment,Overall,Price 2025 (₹/sqft),Price 2050 (₹/sqft),ROI 2050 (%),CAGR (%),AQI,Flood Risk
-1,Kelambakkam,IT Corridor (OMR),it_corridor,63.6,82,74.6,"5,000","44,000",780.0,12.8,55,No
-2,Navalur,IT Corridor (OMR),it_corridor,62.0,82,74.0,"5,500","45,000",718.2,11.8,60,No
-3,Siruseri,IT Corridor (OMR),it_corridor,56.6,76,68.2,"6,200","42,000",577.4,10.9,65,No
-4,Kovalam,ECR Belt,residential,69.0,67,67.8,"5,200","40,000",669.2,11.2,45,No
-5,Neelankarai,ECR Belt,residential,63.3,66,64.9,"9,500","40,000",321.1,7.8,55,No
-6,Poonamallee,West,residential,61.5,63,62.4,"4,500","23,000",411.1,8.4,90,No
-7,Avadi,West,residential,54.5,59,57.2,"4,800","22,000",358.3,8.1,105,No
-8,Ambattur,West,industrial,49.2,55,52.7,"7,200","30,000",316.7,7.5,120,No
-9,Palavakkam,ECR Belt,residential,63.9,44,52.0,"10,500","38,000",261.9,6.7,65,No
-10,Medavakkam,South,residential,45.1,56,51.6,"6,500","27,000",315.4,7.4,95,Yes
-11,Thoraipakkam,IT Corridor (OMR),it_corridor,42.0,58,51.6,"9,200","48,000",421.7,9.2,88,Yes
-12,Madhavaram,North,residential,54.9,49,51.4,"5,800","24,000",313.8,7.6,120,No
-13,Thiruvanmiyur,ECR Belt,residential,64.0,43,51.4,"13,000","42,000",223.1,6.4,75,No
-14,Mogappair,West,residential,55.0,45,49.0,"8,800","32,000",263.6,6.9,95,No
-15,Sholinganallur,South,it_corridor,43.1,52,48.4,"10,000","52,000",420.0,9.6,85,Yes
-16,Tambaram,South,residential,51.2,45,47.5,"6,000","25,000",316.7,7.2,90,Yes
-17,Porur,West,mixed,44.3,46,45.3,"8,000","34,000",325.0,7.7,100,Yes
-18,Perungudi,IT Corridor (OMR),it_corridor,43.5,46,45.0,"9,800","48,000",389.8,8.8,90,Yes
-19,Besant Nagar,South,residential,72.9,25,44.2,"17,000","50,000",194.1,6.6,70,No
-20,Manali,North,industrial,30.1,47,40.2,"3,500","13,000",271.4,6.9,185,Yes
-21,Ennore,North,industrial,26.1,49,39.8,"3,200","14,000",337.5,7.9,170,Yes
-22,Mylapore,Central,residential,65.7,19,37.7,"17,000","52,000",205.9,6.6,95,No
-23,Adyar,South,residential,55.8,25,37.3,"15,000","48,000",220.0,6.5,80,Yes
-24,Anna Nagar,Central,residential,66.1,15,35.4,"15,500","48,000",209.7,6.2,100,No
-25,Nungambakkam,Central,commercial,58.9,19,35.0,"22,000","62,000",181.8,6.2,105,No
-26,Egmore,Central,mixed,56.5,19,34.0,"17,500","52,000",197.1,6.3,115,No
-27,T. Nagar,Central,commercial,56.5,19,34.0,"18,500","55,000",197.3,6.3,110,No
-28,Velachery,South,residential,42.3,28,33.7,"10,500","36,000",242.9,6.7,105,Yes
-29,Tiruvottiyur,North,industrial,30.6,32,31.4,"4,200","16,000",281.0,6.7,155,Yes
-30,Tondiarpet,North,mixed,41.2,23,30.3,"6,200","22,000",254.8,6.8,135,Yes
+1,Oragadam,Outskirts,industrial,69.0,86,79.2,"2,200","25,000",1036.4,13.9,50,No
+2,Chengalpattu,Outskirts,mixed,82.5,75,78.0,"1,800","22,000",1122.2,13.7,48,No
+3,Guduvanchery,Outskirts,residential,77.8,75,76.1,"2,800","28,000",900.0,13.3,55,No
+4,Kelambakkam,IT Corridor (OMR),it_corridor,63.6,82,74.6,"5,000","44,000",780.0,12.8,55,No
+5,Navalur,IT Corridor (OMR),it_corridor,62.0,82,74.0,"5,500","45,000",718.2,11.8,60,No
+6,Thirumazhisai,Outskirts,residential,65.0,71,68.6,"2,500","26,000",940.0,13.6,52,No
+7,Siruseri,IT Corridor (OMR),it_corridor,56.6,76,68.2,"6,200","42,000",577.4,10.9,65,No
+8,Kovalam,ECR Belt,residential,69.0,67,67.8,"5,200","40,000",669.2,11.2,45,No
+9,Gerukambakkam,West,residential,64.2,68,66.5,"4,200","26,000",519.0,8.8,62,No
+10,Auroville,West,residential,72.5,62,66.2,"3,200","25,000",681.2,10.3,28,No
+11,Neelankarai,ECR Belt,residential,63.3,66,64.9,"9,500","40,000",321.1,7.8,55,No
+12,Thiruverkadu,West,residential,61.8,65,63.7,"3,800","28,000",636.8,9.7,70,No
+13,Red Hills,Outskirts,residential,61.5,65,63.6,"2,600","22,000",746.2,11.2,58,Yes
+14,ECR Pondicherry,South,residential,73.8,56,63.1,"4,200","26,000",519.0,8.8,32,No
+15,Poonamallee,West,residential,61.5,63,62.4,"4,500","23,000",411.1,8.4,90,No
+16,Nolambur,West,residential,63.9,60,61.6,"6,500","28,000",330.8,7.3,68,No
+17,White Town,Central,mixed,85.8,43,60.1,"10,000","48,000",380.0,8.3,35,No
+18,Guindy,Central,mixed,83.9,43,59.4,"11,000","33,000",200.0,5.4,72,No
+19,Avadi,West,residential,54.5,59,57.2,"4,800","22,000",358.3,8.1,105,No
+20,Pallikaranai,South,mixed,53.1,56,54.8,"6,200","32,000",416.1,8.3,68,Yes
+21,Lawspet,North,residential,68.7,43,53.3,"4,500","22,000",388.9,8.4,42,Yes
+22,Ambattur,West,industrial,49.2,55,52.7,"7,200","30,000",316.7,7.5,120,No
+23,Saligramam,West,mixed,73.5,38,52.2,"10,500","32,000",204.8,5.8,75,No
+24,Palavakkam,ECR Belt,residential,63.9,44,52.0,"10,500","38,000",261.9,6.7,65,No
+25,Medavakkam,South,residential,45.1,56,51.6,"6,500","27,000",315.4,7.4,95,Yes
+26,Thoraipakkam,IT Corridor (OMR),it_corridor,42.0,58,51.6,"9,200","48,000",421.7,9.2,88,Yes
+27,Madhavaram,North,residential,54.9,49,51.4,"5,800","24,000",313.8,7.6,120,No
+28,Thiruvanmiyur,ECR Belt,residential,64.0,43,51.4,"13,000","42,000",223.1,6.4,75,No
+29,Arumbakkam,Central,residential,67.0,40,50.8,"9,500","30,000",215.8,5.6,78,No
+30,Mudaliarpet,Central,commercial,64.8,39,49.3,"6,500","33,000",407.7,8.0,48,Yes
+31,Mogappair,West,residential,55.0,45,49.0,"8,800","32,000",263.6,6.9,95,No
+32,Sholinganallur,South,it_corridor,43.1,52,48.4,"10,000","52,000",420.0,9.6,85,Yes
+33,Tambaram,South,residential,51.2,45,47.5,"6,000","25,000",316.7,7.2,90,Yes
+34,Chromepet,South,residential,63.2,34,45.7,"5,800","25,000",331.0,6.1,80,Yes
+35,Porur,West,mixed,44.3,46,45.3,"8,000","34,000",325.0,7.7,100,Yes
+36,Perungudi,IT Corridor (OMR),it_corridor,43.5,46,45.0,"9,800","48,000",389.8,8.8,90,Yes
+37,Besant Nagar,South,residential,72.9,25,44.2,"17,000","50,000",194.1,6.6,70,No
+38,Pallavaram,South,mixed,54.9,34,42.4,"5,200","23,000",342.3,6.4,85,Yes
+39,Manali,North,industrial,30.1,47,40.2,"3,500","13,000",271.4,6.9,185,Yes
+40,Ennore,North,industrial,26.1,49,39.8,"3,200","14,000",337.5,7.9,170,Yes
+41,Kolathur,North,residential,51.9,30,38.8,"6,000","27,000",350.0,7.2,82,Yes
+42,Mylapore,Central,residential,65.7,19,37.7,"17,000","52,000",205.9,6.6,95,No
+43,Adyar,South,residential,55.8,25,37.3,"15,000","48,000",220.0,6.5,80,Yes
+44,Perambur,North,residential,49.6,28,36.6,"6,800","22,000",223.5,5.4,90,Yes
+45,Anna Nagar,Central,residential,66.1,15,35.4,"15,500","48,000",209.7,6.2,100,No
+46,Nungambakkam,Central,commercial,58.9,19,35.0,"22,000","62,000",181.8,6.2,105,No
+47,Ayanavaram,North,residential,56.4,19,34.0,"7,500","24,000",220.0,5.2,88,Yes
+48,Egmore,Central,mixed,56.5,19,34.0,"17,500","52,000",197.1,6.3,115,No
+49,T. Nagar,Central,commercial,56.5,19,34.0,"18,500","55,000",197.3,6.3,110,No
+50,Velachery,South,residential,42.3,28,33.7,"10,500","36,000",242.9,6.7,105,Yes
+51,Tiruvottiyur,North,industrial,30.6,32,31.4,"4,200","16,000",281.0,6.7,155,Yes
+52,Tondiarpet,North,mixed,41.2,23,30.3,"6,200","22,000",254.8,6.8,135,Yes
